@@ -1,0 +1,155 @@
+.btn-new {
+    background-color: #2bc73f;
+    color: #fff;
+}
+
+.btn-new:hover {
+    background-color: #2bc73f;
+    color: #fff;
+}
+
+.btn-filter {
+    background-color: #fff;
+    color: #2bc73f;
+}
+
+.btn-filter:hover {
+    background-color: #fff;
+    color: #2bc73f;
+}
+
+.btn-filter:hover,
+.btn-new:hover {
+    border: 0px solid #2bc73f;
+}
+
+.btn-filter:not(:hover),
+.btn-new:not(:hover) {
+    border: 0px solid #2bc73f;
+}
+
+.card-noborder {
+    border: 0px;
+}
+
+.b-radius {
+    border-radius: 10px;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.table-custom tbody tr td {
+    color: #3b3b3b;
+    font-weight: bold;
+    padding: 10px 10px;
+}
+
+.table-custom thead tr th {
+    color: #a3a3a3;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+.table-custom tbody tr td img {
+    border-radius: 10px !important;
+    width: 45px !important;
+    min-width: 45px !important;
+    height: 45px !important;
+}
+
+.admin-span {
+    color: #ff6258;
+    font-weight: bold;
+    background-color: rgba(255, 98, 88, 0.2);
+}
+
+.admin-span:hover {
+    color: #ff6258;
+}
+
+.kasir-span {
+    color: #ffaf00;
+    font-weight: bold;
+    background-color: rgba(255, 175, 0, 0.2);
+}
+
+.kasir-span:hover {
+    color: #ffaf00;
+}
+
+.bg-light-blue {
+    background-color: #2bc73f !important;
+    color: #fff !important;
+}
+
+.close-btn {
+    background-color: #d7d7d7 !important;
+    border-radius: 5px;
+    margin-top: 0px !important;
+    margin-right: 0px !important;
+    padding: 0.2rem 0.7rem !important;
+}
+
+.btn-update {
+    background-color: #2bc73f;
+    color: #fff;
+    font-weight: bold;
+}
+
+.btn-update:hover {
+    background-color: #21a032;
+    color: #fff;
+}
+
+.img-edit {
+    border-radius: 10px;
+    width: 9rem;
+    height: 9rem;
+    object-fit: cover;
+}
+
+.btn-delete-img {
+    border: 1px solid #2bc73f;
+    color: #2bc73f;
+    font-weight: bold;
+}
+
+.btn-ubah-img {
+    background-color: #2bc73f;
+    color: #fff;
+    font-weight: bold;
+}
+
+.btn-ubah-img:hover {
+    background-color: #21a032;
+    color: #fff;
+    font-weight: bold;
+}
+
+.btn-delete-img:hover {
+    color: #21a032;
+}
+
+.error-notice {
+    margin-top: -5px !important;
+    margin-bottom: -15px !important;
+}
+
+.error-notice label {
+    color: #ff6258;
+    font-size: 12px;
+}
+
+.search-dropdown {
+    width: 300px !important;
+}
+
+.search-dropdown input {
+    margin-left: 15px !important;
+}
