@@ -169,10 +169,19 @@ var myChart = new Chart(ctx, {
             @if(count($incomes) != 0)
             @foreach($incomes as $income)
             @php
+            // $total = \App\Transaction::whereDate('created_at', $income)
+            // ->select('kode_transaksi')
+            // ->distinct()
+            // ->sum('total');
+            
+            // $total = \App\Transaction::whereDate('created_at', $income)
+            // ->sum('total_barang');
+            
             $total = \App\Transaction::whereDate('created_at', $income)
-            ->select('kode_transaksi')
-            ->distinct()
+            ->select('transaksi.kode_transaksi','transaksi.total')
+            ->groupBy('kode_transaksi','total')->get()
             ->sum('total');
+
             @endphp
             "{{ $total }}",
             @endforeach

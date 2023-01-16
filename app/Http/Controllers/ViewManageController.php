@@ -88,8 +88,8 @@ class ViewManageController extends Controller
             $total = array();
             foreach ($incomes as $no => $income) {
                 array_push($total, Transaction::whereDate('created_at', $income)
-                    ->select('kode_transaksi')
-                    ->distinct()
+                    ->select('transaksi.kode_transaksi', 'transaksi.total')
+                    ->groupBy('kode_transaksi', 'total')->get()
                     ->sum('total'));
             }
 

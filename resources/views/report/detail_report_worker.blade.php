@@ -205,7 +205,7 @@
 							$supplies = \App\Supply::whereDate('pasok.created_at', $date)
 							->where('pasok.id_user', $worker->id)
 							->join('produk', 'pasok.id_barang', '=', 'produk.id')
-							->select('pasok.*', 'produk.nama_barang')
+							->select('pasok.*', 'produk.nama_barang', 'produk.kode_barang')
 							->latest()
 							->get();
 							@endphp

@@ -34,7 +34,7 @@
                 @if($product->stok != 0)
                 <li class="list-group-item d-flex justify-content-between align-items-center active-list">
                   <div class="text-group">
-                    <p class="m-0">{{ $product->id }}</p>
+                    <p class="m-0 txt-light">{{ $product->id }}</p>
                     <p class="m-0">{{ $product->kode_barang }}</p>
                     <p class="m-0 txt-light">{{ $product->nama_barang }}</p>
                   </div>

@@ -200,10 +200,20 @@
 			@foreach($dates as $date)
 			<li class="text-10 txt-light mt-2">{{ date('d M, Y', strtotime($date)) }}</li>
 			@php
+			// $transactions = \App\Transaction::whereDate('transaksi.created_at', $date)
+			// ->select('transaksi.*')
+			// ->latest()
+			// ->get();
+
 			$transactions = \App\Transaction::whereDate('transaksi.created_at', $date)
-			->select('transaksi.*')
-			->latest()
+			->select('transaksi.kode_transaksi','transaksi.total','transaksi.bayar','transaksi.kembali','transaksi.created_at','transaksi.kasir')
+			->groupBy('kode_transaksi','total','bayar','kembali','created_at','kasir')
 			->get();
+
+			// $transactions = $transactions->select('kode_transaksi')
+			// ->distinct()
+			// ->get();
+
 			@endphp
 			<table class="w-100 mb-4">
 				<thead>
