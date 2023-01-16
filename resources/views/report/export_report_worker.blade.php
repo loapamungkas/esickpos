@@ -346,9 +346,9 @@
 			// ->select('transaksi.*')
 			// ->latest()
 			// ->get();
-			$transactions = \App\Transaction::whereDate('transaksi.created_at', $date)
-			->select('transaksi.kode_transaksi','transaksi.total','transaksi.bayar','transaksi.kembali','transaksi.created_at','transaksi.kasir')
-			->groupBy('kode_transaksi','total','bayar','kembali','created_at','kasir')
+			$transactions = \App\Transaction::whereDate('transaksi.created_at', $date)->where('id_user', $id)
+			->select('transaksi.kode_transaksi','transaksi.total','transaksi.bayar','transaksi.kembali','transaksi.created_at','transaksi.id_user')
+			->groupBy('kode_transaksi','total','bayar','kembali','created_at','id_user')
 			->get();
 			@endphp
 			<table class="w-100 mb-4">

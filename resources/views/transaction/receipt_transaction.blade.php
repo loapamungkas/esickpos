@@ -92,11 +92,11 @@
 				<td class="left w-long">Kode Transaksi : </td>
 				<td class="left">{{ $transaction->kode_transaksi }}</td>
 				<td class="right">Kasir : </td>
-				@php
-				$nama_kasir = explode(' ', $transaction->kasir);
+				{{-- @php
+				$nama_kasir = explode(' ', $transaction->nama);
 				$kasir = $nama_kasir[0];
-				@endphp
-				<td class="right">{{ $kasir }}</td>
+				@endphp --}}
+				<td class="right">{{ $transaction->nama }}</td>
 			</tr>
 			<tr>
 				<td></td>

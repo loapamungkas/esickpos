@@ -206,8 +206,8 @@
 			// ->get();
 
 			$transactions = \App\Transaction::whereDate('transaksi.created_at', $date)
-			->select('transaksi.kode_transaksi','transaksi.total','transaksi.bayar','transaksi.kembali','transaksi.created_at','transaksi.kasir')
-			->groupBy('kode_transaksi','total','bayar','kembali','created_at','kasir')
+			->select('transaksi.kode_transaksi','transaksi.total','transaksi.bayar','transaksi.kembali','transaksi.created_at','transaksi.id_user')
+			->groupBy('kode_transaksi','total','bayar','kembali','created_at','id_user')
 			->get();
 
 			// $transactions = $transactions->select('kode_transaksi')

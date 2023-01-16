@@ -207,7 +207,7 @@ class ReportManageController extends Controller
             rsort($dates_1);
 
             $transactions = Transaction::select('transaksi.*')
-                ->where('id_kasir', $id)
+                ->where('id_user', $id)
                 ->get();
             $array_2 = array();
             foreach ($transactions as $no => $transaction) {
@@ -311,7 +311,7 @@ class ReportManageController extends Controller
                     $last_time = Carbon::now()->subWeeks($req->time)->isoFormat('Y-MM-DD') . ' 00:00:00';
                     if (count($req->laporan) == 2) {
                         $transactions = Transaction::select('transaksi.*')
-                            ->where('id_kasir', $id)
+                            ->where('id_user', $id)
                             ->whereBetween('created_at', array($last_time, $current_time))
                             ->get();
                         $array = array();
@@ -344,7 +344,7 @@ class ReportManageController extends Controller
                         rsort($pasok);
                     } elseif ($req->laporan[0] == 'transaksi') {
                         $transactions = Transaction::select('transaksi.*')
-                            ->where('id_kasir', $id)
+                            ->where('id_user', $id)
                             ->whereBetween('created_at', array($last_time, $current_time))
                             ->get();
                         $array = array();
@@ -361,7 +361,7 @@ class ReportManageController extends Controller
                     $last_time = Carbon::now()->subMonths($req->time)->isoFormat('Y-MM-DD') . ' 00:00:00';
                     if (count($req->laporan) == 2) {
                         $transactions = Transaction::select('transaksi.*')
-                            ->where('id_kasir', $id)
+                            ->where('id_user', $id)
                             ->whereBetween('created_at', array($last_time, $current_time))
                             ->get();
                         $array = array();
@@ -394,7 +394,7 @@ class ReportManageController extends Controller
                         rsort($pasok);
                     } elseif ($req->laporan[0] == 'transaksi') {
                         $transactions = Transaction::select('transaksi.*')
-                            ->where('id_kasir', $id)
+                            ->where('id_user', $id)
                             ->whereBetween('created_at', array($last_time, $current_time))
                             ->get();
                         $array = array();
@@ -411,7 +411,7 @@ class ReportManageController extends Controller
                     $last_time = Carbon::now()->subYears($req->time)->isoFormat('Y-MM-DD') . ' 00:00:00';
                     if (count($req->laporan) == 2) {
                         $transactions = Transaction::select('transaksi.*')
-                            ->where('id_kasir', $id)
+                            ->where('id_user', $id)
                             ->whereBetween('created_at', array($last_time, $current_time))
                             ->get();
                         $array = array();
@@ -444,7 +444,7 @@ class ReportManageController extends Controller
                         rsort($pasok);
                     } elseif ($req->laporan[0] == 'transaksi') {
                         $transactions = Transaction::select('transaksi.*')
-                            ->where('id_kasir', $id)
+                            ->where('id_user', $id)
                             ->whereBetween('created_at', array($last_time, $current_time))
                             ->get();
                         $array = array();
@@ -465,7 +465,7 @@ class ReportManageController extends Controller
                 $end_date2 = $end_date[6] . $end_date[7] . $end_date[8] . $end_date[9] . '-' . $end_date[3] . $end_date[4] . '-' . $end_date[0] . $end_date[1] . ' 23:59:59';
                 if (count($req->laporan) == 2) {
                     $transactions = Transaction::select('transaksi.*')
-                        ->where('id_kasir', $id)
+                        ->where('id_user', $id)
                         ->whereBetween('created_at', array($start_date2, $end_date2))
                         ->get();
                     $array = array();
@@ -498,7 +498,7 @@ class ReportManageController extends Controller
                     rsort($pasok);
                 } elseif ($req->laporan[0] == 'transaksi') {
                     $transactions = Transaction::select('transaksi.*')
-                        ->where('id_kasir', $id)
+                        ->where('id_user', $id)
                         ->whereBetween('created_at', array($start_date2, $end_date2))
                         ->get();
                     $array = array();
@@ -514,7 +514,7 @@ class ReportManageController extends Controller
             }
             $jml_act_pasok = Supply::where('id_user', $id)
                 ->count();
-            $jml_act_trans = Transaction::where('id_kasir', $id)
+            $jml_act_trans = Transaction::where('id_user', $id)
                 ->count();
             return view('report.export_report_worker', compact('transaksi', 'pasok', 'tgl_awal', 'tgl_akhir', 'id', 'jml_act_pasok', 'jml_act_trans'));
         } else {

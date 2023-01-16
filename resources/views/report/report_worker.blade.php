@@ -77,7 +77,7 @@
                   <td class="pl-4"><span class="ammount-box bg-secondary"><i class="mdi mdi-import"></i></span>{{ $pasok
                     }} X</td>
                   @php
-                  $transaksi = \App\Transaction::where('id_kasir', $user->id)
+                  $transaksi = \App\Transaction::where('id_user', $user->id)
                   ->select('kode_transaksi')
                   ->distinct()
                   ->get();

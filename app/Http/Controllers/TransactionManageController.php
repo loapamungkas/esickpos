@@ -102,8 +102,7 @@ class TransactionManageController extends Controller
                 $transaction->total = $req->total;
                 $transaction->bayar = $req->bayar;
                 $transaction->kembali = $req->bayar - $req->total;
-                $transaction->id_kasir = Auth::id();
-                $transaction->kasir = Auth::user()->nama;
+                $transaction->id_user = Auth::id();
                 $transaction->save();
             }
 
@@ -142,8 +141,9 @@ class TransactionManageController extends Controller
         $check_access = Acces::where('user', $id_account)
             ->first();
         if ($check_access->transaksi == 1) {
-            $transaction = Transaction::where('transaksi.kode_transaksi', '=', $id)
-                ->select('transaksi.*')
+            $transaction = Transaction::join('users', 'transaksi.id_user', '=', 'users.id')
+                ->where('transaksi.kode_transaksi', '=', $id)
+                ->select('transaksi.*', 'users.*')
                 ->first();
             $transactions = Transaction::where('transaksi.kode_transaksi', '=', $id)
                 ->join('produk', 'transaksi.id_barang', '=', 'produk.id')

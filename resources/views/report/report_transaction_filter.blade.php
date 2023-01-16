@@ -19,7 +19,8 @@ $transactions = \App\Transaction::select('kode_transaksi')
     @foreach($transactions as $transaction)
     <tr>
       @php
-      $transaksi = \App\Transaction::where('kode_transaksi', $transaction->kode_transaksi)
+      $transaksi = \App\Transaction::join('users', 'transaksi.id_user', '=', 'users.id')
+      ->where('kode_transaksi', $transaction->kode_transaksi)
       ->select('transaksi.*')
       ->first();
       $products = \App\Transaction::where('kode_transaksi', $transaction->kode_transaksi)
@@ -48,7 +49,7 @@ $transactions = \App\Transaction::select('kode_transaksi')
       <td colspan="5" class="dropdown-content">
         <div class="d-flex justify-content-between align-items-center">
           <div class="kasir mb-3">
-            Kasir : {{ $transaksi->kasir }}
+            Kasir : {{ $transaksi->nama }}
           </div>
           <div class="total-barang mb-3">
             Total Barang : {{ $products->count() }}

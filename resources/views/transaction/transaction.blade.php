@@ -66,7 +66,8 @@
               <h4 class="transaction-success-text">Transaksi Berhasil</h4>
             </div>
             @php
-            $transaksi = \App\Transaction::where('transaksi.kode_transaksi', '=', $message)
+            $transaksi = \App\Transaction::join('users', 'transaksi.id_user', '=', 'users.id')
+            ->where('transaksi.kode_transaksi', '=', $message)
             ->select('transaksi.*')
             ->first();
             @endphp
@@ -86,7 +87,7 @@
                 <tr>
                   <td>
                     <span class="d-block little-td">Kasir</span>
-                    <span class="d-block font-weight-bold">{{ $transaksi->kasir }}</span>
+                    <span class="d-block font-weight-bold">{{ $transaksi->nama }}</span>
                   </td>
                   <td>
                     <span class="d-block little-td">Total</span>

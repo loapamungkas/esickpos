@@ -239,7 +239,7 @@
 							<li class="txt-light">{{ date('d M, Y', strtotime($date)) }}</li>
 							@php
 							$transactions = \App\Transaction::select('kode_transaksi')
-							->where('id_kasir', $worker->id)
+							->where('id_user', $worker->id)
 							->whereDate('transaksi.created_at', $date)
 							->distinct()
 							->latest()

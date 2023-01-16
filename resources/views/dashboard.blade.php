@@ -113,7 +113,8 @@
           <div class="col-12">
             @foreach($kd_transaction as $transaksi)
             @php
-            $ket_transaksi = \App\Transaction::where('kode_transaksi', $transaksi->kode_transaksi)
+            $ket_transaksi = \App\Transaction::join('users', 'transaksi.id_user', '=', 'users.id')
+            ->where('kode_transaksi', $transaksi->kode_transaksi)
             ->first();
             @endphp
             <div class="text-group mt-3">
@@ -125,7 +126,7 @@
                   <div class="ml-2">
                     <p class="kode_transaksi font-weight-semibold">{{ $transaksi->kode_transaksi }}</p>
                     <p class="des-transaksi">Rp. {{ number_format($ket_transaksi->total,2,',','.') }} | {{
-                      $ket_transaksi->kasir }}</p>
+                      $ket_transaksi->nama }}</p>
                   </div>
                 </div>
                 <span class="w-transaksi">{{ Carbon\Carbon::parse($ket_transaksi->created_at)->diffForHumans()}}</span>
