@@ -9,6 +9,6 @@ class Supply extends Model
     // Initialize
     protected $table = 'pasok';
     protected $fillable = [
-        'kode_barang', 'nama_barang', 'jumlah', 'harga_beli', 'id_pemasok', 'pemasok',
+        'id_barang', 'jumlah', 'id_user'
     ];
 }

@@ -6,7 +6,6 @@ use PDF;
 use Auth;
 use Session;
 use App\Acces;
-use App\Market;
 use App\Product;
 use App\Activity;
 use App\Transaction;
@@ -141,7 +140,6 @@ class TransactionManageController extends Controller
     // Transaction Receipt
     public function receiptTransaction($id)
     {
-        $market = Market::first();
         $id_account = Auth::id();
         $check_access = Acces::where('user', $id_account)
             ->first();
@@ -155,7 +153,7 @@ class TransactionManageController extends Controller
             $diskon = $transaction->subtotal * $transaction->diskon / 100;
 
             $customPaper = array(0, 0, 400.00, 283.80);
-            $pdf = PDF::loadview('transaction.receipt_transaction', compact('transaction', 'transactions', 'diskon', 'market'))->setPaper($customPaper, 'landscape');
+            $pdf = PDF::loadview('transaction.receipt_transaction', compact('transaction', 'transactions', 'diskon'))->setPaper($customPaper, 'landscape');
             return $pdf->stream();
         } else {
             return back();

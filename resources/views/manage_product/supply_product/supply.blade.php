@@ -1,6 +1,7 @@
 @extends('templates/main')
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/manage_product/supply_product/supply/style.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/css/datedropper.css') }}">
 @endsection
 @section('content')
 <div class="row page-title-header">
@@ -15,10 +16,6 @@
           <button class="btn btn-print" type="button" data-toggle="modal" data-target="#cetakModal">Export
             Laporan</button>
         </div>
-        {{-- <a href="{{ url('/supply/statistics') }}"
-          class="btn btn-icons btn-inverse-primary btn-filter shadow-sm ml-2">
-          <i class="mdi mdi-poll"></i>
-        </a> --}}
         <div class="dropdown dropdown-search">
           <button class="btn btn-icons btn-inverse-primary btn-filter shadow-sm ml-2" type="button"
             id="dropdownMenuIconButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -55,7 +52,7 @@
             @csrf
             <div class="row">
               <div class="col-12">
-                <div class="form-group row" hidden="">
+                <div class="form-group row">
                   <div class="col-5 border rounded-left offset-col-1">
                     <div class="form-radio">
                       <label class="form-check-label">
@@ -90,7 +87,7 @@
                   </div>
                 </div>
               </div>
-              {{-- <div class="col-12 manual-form" hidden="">
+              <div class="col-12 manual-form" hidden="">
                 <div class="form-group row">
                   <div class="col-10 p-0 offset-col-1">
                     <p>Pilih tanggal awal dan akhir</p>
@@ -114,7 +111,7 @@
                     </div>
                   </div>
                 </div>
-              </div> --}}
+              </div>
             </div>
           </form>
         </div>
@@ -133,8 +130,10 @@
               @foreach($dates as $date)
               <li class="txt-light">{{ date('d M, Y', strtotime($date)) }}</li>
               @php
-              $supplies = \App\Supply::whereDate('pasok.created_at', $date)
-              ->select('pasok.*')
+              $supplies = \App\Supply::join('produk', 'pasok.id_barang', '=', 'produk.id')
+              ->join('users', 'pasok.id_user', '=','users.id')
+              ->whereDate('pasok.created_at', $date)
+              ->select('pasok.*', 'produk.kode_barang', 'produk.nama_barang', 'users.nama')
               ->latest()
               ->get();
               @endphp
@@ -150,9 +149,6 @@
                   @foreach($supplies as $supply)
                   <tr>
                     <td>
-                      {{-- <span class="d-block mt-2 txt-light">{{ date('d M, Y', strtotime($supply->created_at)) . '
-                        pada '
-                        . date('H:i', strtotime($supply->created_at)) }}</span> --}}
                       <span class="txt-light">{{ date('H:i', strtotime($supply->created_at)) }}</span>
                     </td>
                     <td class="font-weight-bold big-font">
@@ -161,7 +157,7 @@
                     <td class="font-weight-bold">{{ $supply->nama_barang }}</td>
                     <td class="font-weight-bold"><span class="ammount-box bg-secondary"><i
                           class="mdi mdi-cube-outline"></i></span>{{ $supply->jumlah }}</td>
-                    <td class="font-weight-bold">{{ $supply->pemasok }}</td>
+                    <td class="font-weight-bold">{{ $supply->nama }}</td>
                   </tr>
                   @endforeach
                 </table>
@@ -178,18 +174,9 @@
 @section('script')
 <script src="{{ asset('plugins/js/datedropper.js') }}"></script>
 <script src="{{ asset('plugins/js/Chart.min.js') }}"></script>
-<script src="{{ asset('js/manage_product/supply_product/statistics_supply/script.js') }}"></script>
 <script src="{{ asset('js/manage_product/supply_product/supply/script.js') }}"></script>
 <script type="text/javascript">
   @if ($message = Session::get('create_success'))
-    swal(
-        "Berhasil!",
-        "{{ $message }}",
-        "success"
-    );
-  @endif
-
-  @if ($message = Session::get('import_success'))
     swal(
         "Berhasil!",
         "{{ $message }}",

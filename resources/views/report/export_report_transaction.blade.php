@@ -12,7 +12,7 @@
 		}
 
 		.header {
-			background-color: #d3eafc;
+			background-color: #d3fcdf;
 			padding: 60px 90px;
 		}
 
@@ -74,7 +74,7 @@
 		}
 
 		.txt-green {
-			color: #19d895;
+			color: #2bc73f;
 		}
 
 		p {
@@ -131,7 +131,7 @@
 
 		thead tr td {
 			border-bottom: 0.5px solid #d9dbe4;
-			color: #7e94f6;
+			color: #2bc73f;
 			font-size: 12px;
 			padding: 5px;
 			text-transform: uppercase;
@@ -167,18 +167,18 @@
 	<div class="header">
 		<table class="w-100">
 			<tr>
-				<td class="img-td text-left"><img src="{{ asset('icons/logo-mini2.png') }}"></td>
+				<td class="img-td text-left"><img src="{{ asset('icons/logo-mini.png') }}"></td>
 				<td class="text-left">
-					<p class="text-12 txt-dark d-block mb-1">{{ $market->nama_toko }}</p>
-					<p class="text-10 txt-dark d-block">{{ $market->alamat }}</p>
-					<p class="text-10 txt-dark d-block">{{ $market->no_telp }}</p>
+					<p class="text-12 txt-dark d-block mb-1">Esick Bakery</p>
+					<p class="text-10 txt-dark d-block">Jl. Babadan No.738, Banguntapan, Bantul</p>
+					<p class="text-10 txt-dark d-block">0889-8800-2288</p>
 				</td>
 				<td class="text-right">
-					<p class="text-20 txt-blue font-bold">LAPORAN PEMASUKAN</p>
+					<p class="text-20 txt-green font-bold">LAPORAN PEMASUKAN</p>
 				</td>
 			</tr>
 			<tr>
-				<td class="text-left txt-blue text-12 font-bold pt-30" colspan="2">Periode Laporan</td>
+				<td class="text-left txt-green text-12 font-bold pt-30" colspan="2">Periode Laporan</td>
 				<td class="text-right text-12 txt-dark pt-30">{{ \Carbon\Carbon::now()->isoFormat('DD MMM, Y') }}</td>
 			</tr>
 			<tr>
@@ -188,7 +188,7 @@
 				$nama_users = explode(' ',auth()->user()->nama);
 				$nama_user = $nama_users[0];
 				@endphp
-				<td class="text-right text-12 txt-blue">Oleh {{ $nama_user }}</td>
+				<td class="text-right text-12 txt-green">Oleh {{ $nama_user }}</td>
 			</tr>
 		</table>
 	</div>
@@ -254,7 +254,7 @@
 				<tr>
 					<td class="text-14 pt-15 text-right">
 						<span class="mr-20">PEMASUKAN</span>
-						<span class="txt-blue font-bold">Rp. {{ number_format($pemasukan,2,',','.') }}</span>
+						<span class="txt-green font-bold">Rp. {{ number_format($pemasukan,2,',','.') }}</span>
 					</td>
 				</tr>
 			</tfoot>

@@ -114,13 +114,5 @@
         "error"
     );
   @endif
-
-  @if ($message = Session::get('import_failed'))
-    swal(
-        "",
-        "{{ $message }}",
-        "error"
-    );
-  @endif
 </script>
 @endsection

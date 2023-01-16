@@ -202,9 +202,10 @@
 							@foreach($dates_1 as $date)
 							<li class="txt-light">{{ date('d M, Y', strtotime($date)) }}</li>
 							@php
-							$supplies = \App\Supply::whereDate('created_at', $date)
-							->where('id_pemasok', $worker->id)
-							->select('pasok.*')
+							$supplies = \App\Supply::whereDate('pasok.created_at', $date)
+							->where('pasok.id_user', $worker->id)
+							->join('produk', 'pasok.id_barang', '=', 'produk.id')
+							->select('pasok.*', 'produk.nama_barang')
 							->latest()
 							->get();
 							@endphp

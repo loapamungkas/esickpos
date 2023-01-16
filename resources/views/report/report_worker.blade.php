@@ -9,7 +9,8 @@
       <h4 class="page-title">Laporan Pegawai</h4>
       <div class="d-flex justify-content-start">
         <div class="dropdown">
-          <button class="btn btn-icons btn-inverse-primary btn-filter shadow-sm" type="button" id="dropdownMenuIconButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-icons btn-inverse-primary btn-filter shadow-sm" type="button"
+            id="dropdownMenuIconButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="mdi mdi-filter-variant"></i>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuIconButton1">
@@ -21,7 +22,8 @@
           </div>
         </div>
         <div class="dropdown dropdown-search">
-          <button class="btn btn-icons btn-inverse-primary btn-new shadow-sm ml-2" type="button" id="dropdownMenuIconButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-icons btn-inverse-primary btn-new shadow-sm ml-2" type="button"
+            id="dropdownMenuIconButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="mdi mdi-magnify"></i>
           </button>
           <div class="dropdown-menu search-dropdown" aria-labelledby="dropdownMenuIconButton1">
@@ -69,19 +71,22 @@
                     @endif
                   </td>
                   @php
-                  $pasok = \App\Supply::where('id_pemasok', $user->id)
+                  $pasok = \App\Supply::where('id_user', $user->id)
                   ->count();
                   @endphp
-                  <td class="pl-4"><span class="ammount-box bg-secondary"><i class="mdi mdi-import"></i></span>{{ $pasok }} X</td>
+                  <td class="pl-4"><span class="ammount-box bg-secondary"><i class="mdi mdi-import"></i></span>{{ $pasok
+                    }} X</td>
                   @php
                   $transaksi = \App\Transaction::where('id_kasir', $user->id)
                   ->select('kode_transaksi')
                   ->distinct()
                   ->get();
                   @endphp
-                  <td class="pl-4"><span class="ammount-box bg-secondary"><i class="mdi mdi-swap-horizontal"></i></span>{{ $transaksi->count() }} X</td>
+                  <td class="pl-4"><span class="ammount-box bg-secondary"><i
+                        class="mdi mdi-swap-horizontal"></i></span>{{ $transaksi->count() }} X</td>
                   <td>
-                    <a href="{{ url('/report/workers/detail/' . $user->id) }}" class="btn view-btn"><i class="mdi mdi-eye"></i> Lihat</a>
+                    <a href="{{ url('/report/workers/detail/' . $user->id) }}" class="btn view-btn"><i
+                        class="mdi mdi-eye"></i> Lihat</a>
                   </td>
                 </tr>
                 @endforeach

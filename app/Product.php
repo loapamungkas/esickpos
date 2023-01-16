@@ -9,6 +9,6 @@ class Product extends Model
     // Initialize
     protected $table = 'produk';
     protected $fillable = [
-        'kode_barang', 'jenis_barang', 'nama_barang', 'berat_barang', 'merek', 'stok', 'harga', 'keterangan',
+        'kode_barang', 'jenis_barang', 'nama_barang', 'stok', 'harga', 'keterangan',
     ];
 }

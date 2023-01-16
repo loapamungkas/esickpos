@@ -114,21 +114,19 @@ class SearchManageController extends Controller
 		// New Kategori
 		$new_kategori_content = 'Daftar Kategori | Kategori Baru : Nama kategori';
 		// Product
-		$product_content = 'Daftar Barang => Aktif/Nonaktifkan sistem stok dan pasok barang, Barang : ';
+		$product_content = 'Daftar Barang => Barang : ';
 		foreach ($products as $product) {
-			$product_content .= ' (Kode Barang : ' . $product->kode_barang . ', Jenis Barang : ' . $product->jenis_barang . ', Nama Barang : ' . $product->nama_barang . ', Berat Barang : ' . $product->berat_barang . ', Merek : ' . $product->merek . ', Stok : ' . $product->stok . ', Harga : Rp. ' . number_format($product->harga, 2, ',', '.') . ', Keterangan : ' . $product->keterangan . ')';
+			$product_content .= ' (Kode Barang : ' . $product->kode_barang . ', Jenis Barang : ' . $product->jenis_barang . ', Nama Barang : ' . $product->nama_barang . ', Stok : ' . $product->stok . ', Harga : Rp. ' . number_format($product->harga, 2, ',', '.') . ', Keterangan : ' . $product->keterangan . ')';
 		}
 		// New Product
-		$new_prpduct_content = 'Daftar Barang | Barang Baru : Kode Barang, Nama Barang, Jenis Barang, Berat Barang, Merek Barang, Stok Barang, Harga Barang || Import(Upload Excel) -> Langkah - Langkah Import : 1. Siapkan data dengan format Excel (.xls atau .xlsx), 2. Jika sudah sesuai pilih file, 3. Klik simpan, maka data otomatis tersimpan';
+		$new_prpduct_content = 'Daftar Barang | Barang Baru : Kode Barang, Nama Barang, Jenis Barang, Berat Barang, Merek Barang, Stok Barang, Harga Barang';
 		// Supply
 		$supply_content = 'Riwayat Pasok => ';
-		$supply_statistics_content = 'Riwayat Pasok | Statistik Pasok : ';
 		foreach ($supplies as $supply) {
-			$supply_content .= ' (Kode Barang : ' . $supply->kode_barang . ', Nama Barang : ' . $supply->nama_barang . ', Jumlah : ' . $supply->jumlah . ', Harga Beli : Rp. ' . number_format($supply->harga_beli, 2, ',', '.') . ', Pemasok : ' . $supply->pemasok . ')';
-			$supply_statistics_content .= ' (Kode Barang : ' . $supply->kode_barang . ', Nama Barang : ' . $supply->nama_barang . ', Jumlah : ' . $supply->jumlah . ', Harga Beli : Rp. ' . number_format($supply->harga_beli, 2, ',', '.') . ', Pemasok : ' . $supply->pemasok . ')';
+			$supply_content .= ' (Tanggal : ' . $supply->created_at . ')';
 		}
 		// New Supply
-		$new_supply_content = 'Riwayat Pasok | Pasok Barang : Kode Barang, Jumlah Barang,Harga Satuan, dan Total || Import(Upload Excel) -> Langkah - Langkah Import : 1. Siapkan data dengan format Excel (.xls atau .xlsx), 2. Jika sudah sesuai pilih file, 3. Klik simpan, maka data otomatis tersimpan';
+		$new_supply_content = 'Riwayat Pasok | Pasok Barang : Kode Barang, Jumlah Barang,Harga Satuan, dan Total';
 		// Transaksi
 		$transaksi_content = 'Transaksi => Daftar Pesanan, Tanggal Transaksi, Waktu, Kasir, Subtotal, Diskon, Total, Nominal Bayar dan Kembali';
 		// Laporan Transaksi
@@ -226,13 +224,6 @@ class SearchManageController extends Controller
 				'page_url' => 'supply/new',
 				'page_title' => 'Riwayat Pasok > Pasok Barang',
 				'page_content' => $new_supply_content
-			);
-			$number_array += 1;
-			$page_array[$number_array] = array(
-				'page_name' => 'Statistik Pasok',
-				'page_url' => 'supply/statistics',
-				'page_title' => 'Riwayat Pasok > Statistik Pasok',
-				'page_content' => $supply_statistics_content
 			);
 			$number_array += 1;
 		}

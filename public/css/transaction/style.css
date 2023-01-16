@@ -45,18 +45,8 @@
     font-size: 18px !important;
 }
 
-.btn-scan {
-    background-color: #2bc73f;
-    color: #fff;
-    font-size: 18px !important;
-}
-
 .btn-search:hover {
     color: #2bc73f;
-}
-
-.btn-scan:hover {
-    color: #fff;
 }
 
 .btn-group {

@@ -32,7 +32,6 @@ Route::group(['middleware' => ['auth', 'checkRole:admin,kasir']], function () {
 	Route::get('/logout', 'AuthManageController@logoutProcess');
 	Route::get('/dashboard', 'ViewManageController@viewDashboard');
 	Route::get('/dashboard/chart/{filter}', 'ViewManageController@filterChartDashboard');
-	Route::post('/market/update', 'ViewManageController@updateMarket');
 	// ------------------------- Fitur Cari -------------------------
 	Route::get('/search/{word}', 'SearchManageController@searchPage');
 	// ------------------------- Profil -------------------------
@@ -77,11 +76,6 @@ Route::group(['middleware' => ['auth', 'checkRole:admin,kasir']], function () {
 	Route::get('/supply/check/{id}', 'SupplyManageController@checkSupplyCheck');
 	Route::get('/supply/data/{id}', 'SupplyManageController@checkSupplyData');
 	Route::post('/supply/create', 'SupplyManageController@createSupply');
-	Route::post('/supply/import', 'SupplyManageController@importSupply');
-	Route::get('/supply/statistics', 'SupplyManageController@statisticsSupply');
-	Route::get('/supply/statistics/product/{id}', 'SupplyManageController@statisticsProduct');
-	Route::get('/supply/statistics/users/{id}', 'SupplyManageController@statisticsUsers');
-	Route::get('/supply/statistics/table/{id}', 'SupplyManageController@statisticsTable');
 	Route::post('/supply/statistics/export', 'SupplyManageController@exportSupply');
 	// ------------------------- Transaksi -------------------------
 	Route::get('/transaction', 'TransactionManageController@viewTransaction');

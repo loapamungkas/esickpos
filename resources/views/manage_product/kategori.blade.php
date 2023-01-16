@@ -8,7 +8,6 @@
         <div class="page-header d-flex justify-content-between align-items-center">
             <h4 class="page-title">Daftar Kategori</h4>
             <div class="d-flex justify-content-start">
-
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
@@ -17,7 +16,6 @@
                     </div>
                     <input type="text" class="form-control" name="search" placeholder="Cari Kategori">
                 </div>
-
             </div>
         </div>
     </div>
@@ -45,7 +43,7 @@
                             <label class="col-lg-3 col-md-3 col-sm-12 col-form-label font-weight-bold">Nama
                                 Kategori</label>
                             <div class="col-lg-9 col-md-9 col-sm-12">
-                                <input type="text" class="form-control" name="nama_kategori">
+                                <input type="text" class="form-control" name="nama_kategori_edit">
                             </div>
                             <div class="col-lg-9 col-md-9 col-sm-12 offset-lg-3 offset-md-3 error-notice"
                                 id="nama_kategori_error">
@@ -160,14 +158,13 @@
     );
   @endif  
 
-  @if ($message = Session::get('import_success'))
+  @if ($message = Session::get('create_failed'))
     swal(
-        "Berhasil!",
+        "",
         "{{ $message }}",
-        "success"
+        "error"
     );
   @endif
-
   @if ($message = Session::get('update_failed'))
     swal(
         "",
@@ -175,15 +172,6 @@
         "error"
     );
   @endif
-
-  @if ($message = Session::get('supply_system_status'))
-    swal(
-        "",
-        "{{ $message }}",
-        "success"
-    );
-  @endif
-
 
   $(document).on('click', '.btn-edit', function(){
     var data_edit = $(this).attr('data-edit');
@@ -193,7 +181,7 @@
       success:function(response)
       {
         $('input[name=id]').val(response.kategori.id);
-        $('input[name=nama_kategori]').val(response.kategori.nama_kategori);
+        $('input[name=nama_kategori_edit]').val(response.kategori.nama_kategori);
         validator.resetForm();
       }
     });

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Website POS</title>
+  <title>Esick Bakery POS</title>
 
   <!-- CSS -->
   <link rel="stylesheet" href="{{ asset('assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css') }}">
@@ -34,11 +34,11 @@
           <img src="{{ asset('icons/logo-mini.png') }}" alt="logo" /> </a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center">
-        <form class="search-form d-none d-md-block" action="#">
+        {{-- <form class="search-form d-none d-md-block" action="#">
           <div class="form-group">
             <input type="search" class="form-control" name="search_page" placeholder="Cari Halaman">
           </div>
-        </form>
+        </form> --}}
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown">
             @php
@@ -90,8 +90,10 @@
           </li>
           <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
             <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-              <img class="img-xs rounded-circle" src="{{ asset('pictures/' . auth()->user()->foto) }}"
-                alt="Profile image"> </a>
+              {{-- <img class="img-xs rounded-circle" src="{{ asset('pictures/' . auth()->user()->foto) }}"
+                alt="Profile image"> --}}
+              <p class="txt-green mb-0">Halo, {{ auth()->user()->nama }}</p>
+            </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <div class="dropdown-header text-center">
                 <img class="img-md rounded-circle" src="{{ asset('pictures/' . auth()->user()->foto) }}"
@@ -116,27 +118,6 @@
       <!-- SideNav -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-          {{-- <li class="nav-item nav-profile">
-            <a href="{{ url('/profile') }}" class="nav-link">
-              <div class="profile-image">
-                <img class="img-xs rounded-circle" src="{{ asset('pictures/' . auth()->user()->foto) }}"
-                  alt="profile image">
-                <div class="dot-indicator bg-success"></div>
-              </div>
-              <div class="text-wrapper">
-                @php
-                $user_name = auth()->user()->nama;
-                if(strlen($user_name) > 12){
-                $nama = substr($user_name, 0, 12) . '..';
-                }else{
-                $nama = $user_name;
-                }
-                @endphp
-                <p class="profile-name">{{ $nama }}</p>
-                <p class="designation">{{ auth()->user()->role }}</p>
-              </div>
-            </a>
-          </li> --}}
           <li class="nav-item nav-category">Daftar Menu</li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url('/dashboard') }}">

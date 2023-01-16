@@ -16,57 +16,6 @@
 	</div>
 </div>
 <div class="row modal-group">
-	<div class="modal fade" id="scanModal" tabindex="-1" role="dialog" aria-labelledby="scanModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="scanModalLabel">Scan Barcode</h5>
-					<button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-12 text-center" id="area-scan">
-						</div>
-						<div class="col-12 barcode-result" hidden="">
-							<h5 class="font-weight-bold">Hasil</h5>
-							<div class="form-border">
-								<p class="barcode-result-text"></p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer" id="btn-scan-action" hidden="">
-					<button type="button"
-						class="btn btn-primary btn-sm font-weight-bold rounded-0 btn-continue">Lanjutkan</button>
-					<button type="button"
-						class="btn btn-outline-secondary btn-sm font-weight-bold rounded-0 btn-repeat">Ulangi</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="modal fade" id="formatModal" tabindex="-1" role="dialog" aria-labelledby="formatModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="formatModalLabel">Format Upload</h5>
-					<button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-12 img-import-area">
-							<img src="{{ asset('images/instructions/ImportSupply.jpg') }}" class="img-import">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 	<div class="modal fade" id="tableModal" tabindex="-1" role="dialog" aria-labelledby="tableModalLabel"
 		aria-hidden="true">
 		<div class="modal-dialog">
@@ -90,6 +39,7 @@
 								<li
 									class="list-group-item d-flex justify-content-between align-items-center active-list">
 									<div class="text-group">
+										<p class="m-0 txt-light">{{ $product->id }}</p>
 										<p class="m-0">{{ $product->kode_barang }}</p>
 										<p class="m-0 txt-light">{{ $product->nama_barang }}</p>
 									</div>
@@ -126,7 +76,9 @@
 									<div class="form-group row">
 										<label class="col-12 font-weight-bold col-form-label">Kode Barang</label>
 										<div class="col-12 d-flex">
-											<input type="text" class="form-control mr-2" name="kode_barang" readonly="">
+											<input type="text" class="form-control mr-2" name="kode_barang" readonly=""
+												hidden>
+											<input type="text" class="form-control mr-2" name="kode" readonly="">
 											<button class="btn btn-search" data-toggle="modal" data-target="#tableModal"
 												type="button">
 												<i class="mdi mdi-magnify"></i>
@@ -192,58 +144,22 @@
 <script src="{{ asset('plugins/js/quagga.min.js') }}"></script>
 <script src="{{ asset('js/manage_product/supply_product/new_supply/script.js') }}"></script>
 <script type="text/javascript">
-	@if ($message = Session::get('import_failed'))
-		swal(
-		    "",
-		    "{{ $message }}",
-		    "error"
-		);
-	@endif
-
-	$(document).on('click', '.btn-continue', function(){
-	  var kode_barang = $('.barcode-result-text').text();
-	  $.ajax({
-	  	url: "{{ url('/supply/check') }}/" + kode_barang,
-	  	method: "GET",
-	  	success:function(data){
-	  		if(data == 'sukses'){
-				$('input[name=kode_barang]').val(kode_barang);
-				$('#btn-scan-action').prop('hidden', true);
-				$('#area-scan').prop('hidden', true);
-				$('.barcode-result').prop('hidden', true);
-				$('.close-btn').click();
-				$('input[name=kode_barang]').valid();
-				stopScan();
-	  		}else{
-	  			swal(
-			        "",
-			        "Kode barang tidak tersedia",
-			        "error"
-			    );
-	  		}
-	  	}
-	  });
-	});
-
 	$(document).on('click', '.btn-tambah', function(e){
 		e.preventDefault();
 		$('form[name=manual_form]').valid();
 		var kode_barang = $('input[name=kode_barang]').val();
 		var jumlah = $('input[name=jumlah]').val();
-		// var harga_beli = $('input[name=harga_beli]').val();
-		// var total = parseInt(jumlah) * parseInt(harga_beli);
 		if(validator.valid() == true){
 			$.ajax({
 				url: "{{ url('/supply/data') }}/" + kode_barang,
 				method: "GET",
 				success:function(response){
-					var check = $('.kd-barang-field:contains('+ response.product.kode_barang +')').length;
+					var check = $('.kd-barang-field:contains('+ response.product.id +')').length;
 					if(check == 0){
 						$('input[name=kode_barang]').val('');
 						$('input[name=jumlah]').val('');
-						// $('input[name=harga_beli]').val('');
-						$('tbody').append('<tr><td>'+ response.product.kode_barang +'</td><td>'+ response.product.nama_barang 
-								+'</td><td>'+ jumlah +'</td><td><button type="button" class="btn btn-icons btn-rounded btn-danger ml-1 btn-delete"><i class="mdi mdi-close"></i></button><div class="form-group" hidden=""><input type="text" class="form-control" name="kode_barang_supply[]" value="'+ response.product.kode_barang 
+						$('tbody').append('<tr><td><span class="kd-barang-field">'+ response.product.id +'</span></td><td>'+ response.product.nama_barang 
+								+'</td><td>'+ jumlah +'</td><td><button type="button" class="btn btn-icons btn-rounded btn-danger ml-1 btn-delete"><i class="mdi mdi-close"></i></button><div class="form-group" hidden=""><input type="text" class="form-control" name="kode_barang_supply[]" value="'+ response.product.id 
 											+'"><input type="text" class="form-control" name="jumlah_supply[]" value="'+ jumlah 
 											+'"></div></td></tr>');
 						$('.btn-simpan').prop('hidden', false);

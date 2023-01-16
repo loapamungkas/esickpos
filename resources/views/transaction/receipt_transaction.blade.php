@@ -1,89 +1,91 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title></title>
 	<style type="text/css">
-		*{
+		* {
 			font-family: Arial, sans-serif;
 		}
 
-		.center{
+		.center {
 			text-align: center;
 		}
 
-		.right{
+		.right {
 			text-align: right;
 		}
 
-		.left{
+		.left {
 			text-align: left;
 		}
 
-		p{
+		p {
 			font-size: 10px;
 		}
 
-		.top-min{
+		.top-min {
 			margin-top: -10px;
 		}
 
-		.uppercase{
+		.uppercase {
 			text-transform: uppercase;
 		}
 
-		.bold{
+		.bold {
 			font-weight: bold;
 		}
 
-		.d-block{
+		.d-block {
 			display: block;
 		}
 
-		hr{
+		hr {
 			border: 0;
 			border-top: 1px solid #000;
 		}
 
-		.hr-dash{
+		.hr-dash {
 			border-style: dashed none none none;
 		}
 
-		table{
+		table {
 			font-size: 10px;
 		}
 
-		table thead tr td{
+		table thead tr td {
 			padding: 5px;
 		}
 
-		.w-100{
+		.w-100 {
 			width: 100%;
 		}
 
-		.line{
+		.line {
 			border: 0;
 			border-top: 1px solid #000;
 			border-style: dashed none none none;
 		}
 
-		.body{
+		.body {
 			margin-top: -10px;
 		}
 
-		.b-p{
+		.b-p {
 			font-size: 12px !important;
 		}
 
-		.w-long{
+		.w-long {
 			width: 80px;
 		}
 	</style>
 </head>
+
 <body>
 	<div class="header">
-		<p class="uppercase bold d-block center b-p">{{ $market->nama_toko }}</p>
-		<p class="top-min d-block center">{{ $market->alamat }}</p>
-		<p class="top-min d-block center">{{ $market->no_telp }}</p>
+		<p class="uppercase bold d-block center b-p">Esick Bakery</p>
+		<p class="top-min d-block center">Jl. Babadan No.738, Banguntapan, Bantul</p>
+		<p class="top-min d-block center">0889-8800-2288</p>
 		<hr class="hr-dash">
 		<table class="w-100">
 			<tr>
@@ -159,4 +161,5 @@
 		<p class="center">Terima Kasih Telah Berkunjung</p>
 	</div>
 </body>
+
 </html>

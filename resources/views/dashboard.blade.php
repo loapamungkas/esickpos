@@ -7,63 +7,6 @@
   <div class="col-12">
     <div class="page-header d-flex justify-content-between align-items-center">
       <h4 class="page-title">Dashboard</h4>
-      <button class="setting-btn" data-toggle="modal" data-target="#pengaturanTokoModal">
-        Pengaturan Toko
-      </button>
-    </div>
-  </div>
-</div>
-<div class="row modal-group">
-  <div class="modal fade" id="pengaturanTokoModal" tabindex="-1" role="dialog"
-    aria-labelledby="pengaturanTokoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form name="market_form" action="{{ url('/market/update') }}" method="POST">
-          @csrf
-          <div class="modal-header">
-            <h5 class="modal-title" id="pengaturanTokoModalLabel">Pengaturan Toko</h5>
-            <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group row">
-              <div class="col-12">
-                <div class="form-group row">
-                  <label class="col-lg-3 col-md-3 col-sm-4 col-12 col-form-label font-weight-bold">Nama Toko</label>
-                  <div class="col-lg-9 col-md-9 col-sm-8 col-12">
-                    <input type="text" class="form-control" name="nama_toko" placeholder="Masukkan Nama Toko"
-                      value="{{ $market->nama_toko }}">
-                  </div>
-                  <div class="col-lg-9 col-md-9 col-sm-8 col-12 offset-lg-3 offset-md-3 offset-sm-4 error-notice"
-                    id="nama_toko_error"></div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-lg-3 col-md-3 col-sm-4 col-12 col-form-label font-weight-bold">No Telepon</label>
-                  <div class="col-lg-9 col-md-9 col-sm-8 col-12">
-                    <input type="text" class="form-control" name="no_telp" placeholder="Masukkan No Telepon"
-                      value="{{ $market->no_telp }}">
-                  </div>
-                  <div class="col-lg-9 col-md-9 col-sm-8 col-12 offset-lg-3 offset-md-3 offset-sm-4 error-notice"
-                    id="no_telp_error"></div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-lg-3 col-md-3 col-sm-4 col-12 col-form-label font-weight-bold">Alamat</label>
-                  <div class="col-lg-9 col-md-9 col-sm-8 col-12">
-                    <textarea class="form-control" name="alamat" rows="4"
-                      placeholder="Masukkan Alamat">{{ $market->alamat }}</textarea>
-                  </div>
-                  <div class="col-lg-9 col-md-9 col-sm-8 col-12 offset-lg-3 offset-md-3 offset-sm-4 error-notice"
-                    id="alamat_error"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-simpan"><i class="mdi mdi-content-save"></i> Simpan</button>
-          </div>
-        </form>
-      </div>
     </div>
   </div>
 </div>
@@ -109,7 +52,15 @@
           <div class="card-body">
             <div class="row">
               <div class="col-12 mb-4 d-flex justify-content-between align-items-center">
-                <h5 class="font-weight-semibold chart-title">Pemasukan 1 Minggu Terakhir</h5>
+                <h5 class="font-weight-semibold chart-title">Pemasukan 7 Hari Terakhir</h5>
+                {{-- @php
+                $access = \App\Acces::where('user', auth()->user()->id)
+                ->first();
+                @endphp
+                @if (Auth::user()->role == 'admin')
+                <button class="btn btn-view-transaction" type="button"
+                  data-access="{{ $access->kelola_laporan }}">Semua</button>
+                @endif --}}
                 <div class="dropdown">
                   <button class="btn btn-filter-chart icon-btn dropdown-toggle" type="button"
                     id="dropdownMenuIconButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -153,8 +104,10 @@
               $access = \App\Acces::where('user', auth()->user()->id)
               ->first();
               @endphp
+              @if (Auth::user()->role == 'admin')
               <button class="btn btn-view-transaction" type="button"
                 data-access="{{ $access->kelola_laporan }}">Semua</button>
+              @endif
             </div>
           </div>
           <div class="col-12">
@@ -171,8 +124,8 @@
                   </span>
                   <div class="ml-2">
                     <p class="kode_transaksi font-weight-semibold">{{ $transaksi->kode_transaksi }}</p>
-                    <p class="des-transaksi">Rp. {{ number_format($ket_transaksi->total,2,',','.') }} <span
-                        class="dot"><i class="mdi mdi-checkbox-blank-circle"></i></span> {{ $ket_transaksi->kasir }}</p>
+                    <p class="des-transaksi">Rp. {{ number_format($ket_transaksi->total,2,',','.') }} | {{
+                      $ket_transaksi->kasir }}</p>
                   </div>
                 </div>
                 <span class="w-transaksi">{{ Carbon\Carbon::parse($ket_transaksi->created_at)->diffForHumans()}}</span>
@@ -217,6 +170,8 @@ var myChart = new Chart(ctx, {
             @foreach($incomes as $income)
             @php
             $total = \App\Transaction::whereDate('created_at', $income)
+            ->select('kode_transaksi')
+            ->distinct()
             ->sum('total');
             @endphp
             "{{ $total }}",
@@ -268,10 +223,10 @@ $(document).on('click', '.chart-filter', function(e){
   var data_filter = $(this).attr('data-filter');
   if(data_filter == 'pemasukan'){
     $('.btn-filter-chart').html('Pemasukan');
-    $('.chart-title').html('Pemasukan 1 Minggu Terakhir');
+    $('.chart-title').html('Pemasukan 7 Hari Terakhir');
   }else if(data_filter == 'pelanggan'){
     $('.btn-filter-chart').html('Pelanggan');
-    $('.chart-title').html('Pelanggan 1 Minggu Terakhir');
+    $('.chart-title').html('Pelanggan 7 Hari Terakhir');
   }
   $.ajax({
     url: "{{ url('/dashboard/chart') }}/" + data_filter,

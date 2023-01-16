@@ -8,11 +8,8 @@ use Session;
 use Carbon\Carbon;
 use App\Acces;
 use App\Supply;
-use App\Market;
 use App\Product;
 use App\Activity;
-use App\Imports\SupplyImport;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class SupplyManageController extends Controller
@@ -40,21 +37,6 @@ class SupplyManageController extends Controller
         }
     }
 
-    // Show View Statistic Supply
-    public function statisticsSupply()
-    {
-        $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
-            ->first();
-        if ($check_access->kelola_barang == 1) {
-            $products = Product::all()
-                ->sortBy('kode_barang');
-
-            return view('manage_product.supply_product.statistics_supply', compact('products'));
-        } else {
-            return back();
-        }
-    }
 
     // Show View New Supply
     public function viewNewSupply()
@@ -79,7 +61,7 @@ class SupplyManageController extends Controller
         $check_access = Acces::where('user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
-            $check_product = Product::where('kode_barang', $id)
+            $check_product = Product::where('id', $id)
                 ->count();
 
             if ($check_product != 0) {
@@ -100,76 +82,10 @@ class SupplyManageController extends Controller
             ->first();
 
         if ($check_access->kelola_barang == 1) {
-            $product = Product::where('kode_barang', $id)
+            $product = Product::where('id', $id)
                 ->first();
 
             return response()->json(['product' => $product]);
-        } else {
-            return back();
-        }
-    }
-
-    // Take Supply Statics Product
-    public function statisticsProduct($id)
-    {
-        $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
-            ->first();
-        if ($check_access->kelola_barang == 1) {
-            $product = Product::where('kode_barang', '=', $id)
-                ->first();
-            $supplies = Supply::where('kode_barang', '=', $id)
-                ->select('pasok.*')
-                ->orderBy('created_at', 'ASC')
-                ->get();
-            $dates = array();
-            $ammounts = array();
-            foreach ($supplies as $no => $supply) {
-                $dates[$no] = date('d M, Y', strtotime($supply->created_at));
-                $ammounts[$no] = $supply->harga_beli;
-            }
-
-            return response()->json([
-                'product' => $product,
-                'dates' => $dates,
-                'ammounts' => $ammounts
-            ]);
-        } else {
-            return back();
-        }
-    }
-
-    // Take Supply Statics Users
-    public function statisticsUsers($id)
-    {
-        $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
-            ->first();
-        if ($check_access->kelola_barang == 1) {
-            $total_user = Supply::select('id_pemasok')
-                ->where('kode_barang', '=', $id)
-                ->distinct()
-                ->get();
-
-            echo $total_user->count() . ' Pemasok';
-        } else {
-            return back();
-        }
-    }
-
-    // Take Supply Statics Table
-    public function statisticsTable($id)
-    {
-        $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
-            ->first();
-        if ($check_access->kelola_barang == 1) {
-            $supplies = Supply::where('kode_barang', '=', $id)
-                ->select('pasok.*')
-                ->orderBy('created_at', 'DESC')
-                ->get();
-
-            return view('manage_product.supply_product.statistics_table', compact('supplies'));
         } else {
             return back();
         }
@@ -183,8 +99,8 @@ class SupplyManageController extends Controller
             ->first();
         if ($check_access->kelola_barang == 1) {
             $jumlah_data = 0;
-            foreach ($req->kode_barang_supply as $no => $kode_barang) {
-                $product_status = Product::where('kode_barang', $kode_barang)
+            foreach ($req->kode_barang_supply as $no => $id_barang) {
+                $product_status = Product::where('id', $id_barang)
                     ->first();
                 if ($product_status->stok == 0) {
                     $product_status->keterangan = 'Tersedia';
@@ -192,14 +108,9 @@ class SupplyManageController extends Controller
                 }
 
                 $supply = new Supply;
-                $supply->kode_barang = $kode_barang;
-                $product = Product::where('kode_barang', $kode_barang)
-                    ->first();
-                $supply->nama_barang = $product->nama_barang;
+                $supply->id_barang = $id_barang;
                 $supply->jumlah = $req->jumlah_supply[$no];
-                // $supply->harga_beli = $req->harga_beli_supply[$no];
-                $supply->id_pemasok = Auth::id();
-                $supply->pemasok = Auth::user()->nama;
+                $supply->id_user = Auth::id();
                 $supply->save();
                 $jumlah_data += 1;
             }
@@ -219,42 +130,6 @@ class SupplyManageController extends Controller
         }
     }
 
-    // Import New Supply
-    public function importSupply(Request $req)
-    {
-        $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
-            ->first();
-        if ($check_access->kelola_barang == 1) {
-            try {
-                $file = $req->file('excel_file');
-                $nama_file = rand() . $file->getClientOriginalName();
-                $file->move('excel_file', $nama_file);
-                $import = new SupplyImport;
-                Excel::import($import, public_path('/excel_file/' . $nama_file));
-
-                $array = (new SupplyImport)->toArray(public_path('/excel_file/' . $nama_file));
-                $jumlah_data = count($array[0]);
-
-                $activity = new Activity;
-                $activity->id_user = Auth::id();
-                $activity->user = Auth::user()->nama;
-                $activity->nama_kegiatan = 'pasok';
-                $activity->jumlah = $jumlah_data;
-                $activity->save();
-
-                Session::flash('import_success', 'Data barang berhasil diimport');
-            } catch (\Exception $ex) {
-                Session::flash('import_failed', 'Cek kembali terdapat data kosong, stok barang kosong atau kode barang yang tidak tersedia');
-
-                return back();
-            }
-
-            return redirect('/supply');
-        } else {
-            return back();
-        }
-    }
 
     // Export Supply Report
     public function exportSupply(Request $req)
@@ -323,11 +198,7 @@ class SupplyManageController extends Controller
                 $tgl_awal = $start_date2;
                 $tgl_akhir = $end_date2;
             }
-            $market = Market::first();
-
-            // $pdf = PDF::loadview('manage_product.supply_product.export_report_supply', compact('dates', 'tgl_awal', 'tgl_akhir', 'market'));
-            // return $pdf->stream();
-            return view('manage_product.supply_product.export_report_supply', compact('dates', 'tgl_awal', 'tgl_akhir', 'market'));
+            return view('manage_product.supply_product.export_report_supply', compact('dates', 'tgl_awal', 'tgl_akhir'));
         } else {
             return back();
         }

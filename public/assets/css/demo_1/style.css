@@ -563,14 +563,15 @@
 /* Sidebar */
 .sidebar {
     min-height: calc(100vh - 63px);
-    background: -webkit-gradient(
+    /* background: -webkit-gradient(
         linear,
         left bottom,
         left top,
         from(#5ade6c),
         to(#2bc73f)
     );
-    background: linear-gradient(to top, #5ade6c, #2bc73f);
+    background: linear-gradient(to top, #5ade6c, #2bc73f); */
+    background: #2bc73f;
     font-family: "roboto", sans-serif;
     padding: 0;
     width: 270px;

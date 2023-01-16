@@ -33,13 +33,22 @@ class KategoriManageController extends Controller
             ->first();
         if ($check_access->kelola_barang == 1) {
 
-            $kategori = new Kategori;
-            $kategori->nama_kategori = $req->nama_kategori;
-            $kategori->save();
+            $check_kategori = Kategori::where('nama_kategori', $req->nama_kategori)
+                ->count();
 
-            Session::flash('create_success', 'Kategori baru berhasil ditambahkan');
+            if ($check_kategori == 0) {
+                $kategori = new Kategori;
+                $kategori->nama_kategori = $req->nama_kategori;
+                $kategori->save();
 
-            return redirect('/kategori');
+                Session::flash('create_success', 'Kategori baru berhasil ditambahkan');
+
+                return redirect('/kategori');
+            } else {
+                Session::flash('create_failed', 'Kategori telah digunakan');
+
+                return back();
+            }
         } else {
             return back();
         }
@@ -69,7 +78,7 @@ class KategoriManageController extends Controller
             ->first();
         if ($check_access->kelola_barang == 1) {
             $kategori = Kategori::find($req->id);
-            $kategori->nama_kategori = $req->nama_kategori;
+            $kategori->nama_kategori = $req->nama_kategori_edit;
             $kategori->save();
             Session::flash('update_success', 'Data kategori berhasil diubah');
 

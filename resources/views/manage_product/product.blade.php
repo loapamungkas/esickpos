@@ -17,7 +17,7 @@
             <h6 class="dropdown-header">Urut Berdasarkan :</h6>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item filter-btn" data-filter="kode_barang">Kode Barang</a>
-            <a href="#" class="dropdown-item filter-btn" data-filter="jenis_barang">Jenis Barang</a>
+            <a href="#" class="dropdown-item filter-btn" data-filter="id_kategori">Kategori</a>
             <a href="#" class="dropdown-item filter-btn" data-filter="nama_barang">Nama Barang</a>
             <a href="#" class="dropdown-item filter-btn" data-filter="stok">Stok Barang</a>
             <a href="#" class="dropdown-item filter-btn" data-filter="harga">Harga Barang</a>
@@ -164,8 +164,6 @@
                   </td>
                   <td>{{ $product->nama_kategori }}</td>
                   <td>{{$product->stok }}</td>
-                  {{-- <span class="ammount-box bg-secondary"><i class="mdi mdi-cube-outline"></i></span> --}}
-                  {{-- <span class="ammount-box bg-green"><i class="mdi mdi-coin"></i></span> --}}
                   <td>Rp. {{
                     number_format($product->harga,2,',','.') }}</td>
                   <td>
@@ -224,14 +222,6 @@
     );
   @endif  
 
-  @if ($message = Session::get('import_success'))
-    swal(
-        "Berhasil!",
-        "{{ $message }}",
-        "success"
-    );
-  @endif
-
   @if ($message = Session::get('update_failed'))
     swal(
         "",
@@ -263,13 +253,9 @@
         $('input[name=id]').val(response.product.id);
         $('input[name=kode_barang]').val(response.product.kode_barang);
         $('input[name=nama_barang]').val(response.product.nama_barang);
-        $('input[name=merek]').val(response.product.merek);
         $('input[name=stok]').val(response.product.stok);
         $('input[name=harga]').val(response.product.harga);
-        var berat_barang = response.product.berat_barang.split(" ");
-        $('input[name=berat_barang]').val(berat_barang[0]);
-        $('select[name=jenis_barang] option[value="'+ response.product.jenis_barang +'"]').prop('selected', true);
-        $('select[name=satuan_berat] option[value="'+ berat_barang[1] +'"]').prop('selected', true);
+        $('select[name=id_kategori] option[value="'+ response.product.id_kategori +'"]').prop('selected', true);
         validator.resetForm();
       }
     });

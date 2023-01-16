@@ -28,6 +28,7 @@
         <div class="row w-100">
           <div class="col-lg-4 mx-auto">
             <div class="auto-form-wrapper">
+              <div class="logo"><img src="{{ asset('icons/logo-login.png') }}" alt="logo" /></div>
               @if($users != 0)
               <form action="{{ url('/verify_login') }}" method="post" name="login_form">
                 @csrf
@@ -98,7 +99,7 @@
               </form>
               @endif
             </div>
-            <p class="mt-3 footer-text text-center">copyright © 2018 Bootstrapdash. All rights reserved.</p>
+            <p class="mt-3 footer-text text-center">Copyright © 2022 Loa Pamungkas.</p>
           </div>
         </div>
       </div>

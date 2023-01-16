@@ -15,12 +15,12 @@
 
 .btn-filter:hover {
     background-color: #fff;
-    color: #2bc73f;
+    color: #21a032;
 }
 
 .btn-filter:hover,
 .btn-new:hover {
-    border: 0px solid #2bc73f;
+    border: 0px solid #21a032;
 }
 
 .btn-filter:not(:hover),
@@ -117,29 +117,8 @@
 }
 
 .btn-update:hover {
+    background-color: #21a032;
     color: #fff;
-}
-
-.btn-scan {
-    background-color: #2bc73f;
-    color: #fff;
-}
-
-.btn-scan:hover {
-    background-color: #2bc73f;
-    color: #fff;
-}
-
-.btn-scan:hover {
-    border: 0px solid #2bc73f;
-}
-
-.btn-scan:not(:hover) {
-    border: 0px solid #2bc73f;
-}
-
-.btn-scan i {
-    font-size: 16px;
 }
 
 .close-btn {
