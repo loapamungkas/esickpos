@@ -76,10 +76,10 @@ function jumlahBarang() {
     $(".jml-barang-td").html(jumlah_barang + " Barang");
 }
 
-function tambahData(kode, nama, harga, stok, status) {
+function tambahData(id, kode, nama, harga, stok, status) {
     var tambah_data =
-        '<tr><td><input type="text" name="kode_barang[]" hidden="" value="' +
-        kode +
+        '<tr><td><input type="text" name="id_barang[]" hidden="" value="' +
+        id +
         '"><span class="nama-barang-td">' +
         nama +
         '</span><span class="kode-barang-td">' +

@@ -263,7 +263,8 @@
 										->first();
 										$products = \App\Transaction::where('kode_transaksi',
 										$transaction->kode_transaksi)
-										->select('transaksi.*')
+										->join('produk', 'transaksi.id_barang', '=', 'produk.id')
+										->select('transaksi.*','produk.*')
 										->get();
 										$tgl_transaksi = \App\Transaction::where('kode_transaksi', '=' ,
 										$transaction->kode_transaksi)

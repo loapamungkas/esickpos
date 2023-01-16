@@ -36,7 +36,7 @@ class TransactionManageController extends Controller
         $check_access = Acces::where('user', $id_account)
             ->first();
         if ($check_access->transaksi == 1) {
-            $product = Product::where('kode_barang', '=', $id)
+            $product = Product::where('id', '=', $id)
                 ->first();
 
             $status = 1;
@@ -57,11 +57,11 @@ class TransactionManageController extends Controller
         $check_access = Acces::where('user', $id_account)
             ->first();
         if ($check_access->transaksi == 1) {
-            $product_check = Product::where('kode_barang', '=', $id)
+            $product_check = Product::where('id', '=', $id)
                 ->count();
 
             if ($product_check != 0) {
-                $product = Product::where('kode_barang', '=', $id)
+                $product = Product::where('id', '=', $id)
                     ->first();
                 $status = 1;
                 $check = "tersedia";
@@ -88,15 +88,13 @@ class TransactionManageController extends Controller
         $check_access = Acces::where('user', $id_account)
             ->first();
         if ($check_access->transaksi == 1) {
-            $jml_barang = count($req->kode_barang);
+            $jml_barang = count($req->id_barang);
             for ($i = 0; $i < $jml_barang; $i++) {
                 $transaction = new Transaction;
                 $transaction->kode_transaksi = $req->kode_transaksi;
-                $transaction->kode_barang = $req->kode_barang[$i];
-                $product_data = Product::where('kode_barang', $req->kode_barang[$i])
-                    ->first();
-                $transaction->nama_barang = $product_data->nama_barang;
-                $transaction->harga = $product_data->harga;
+
+                $transaction->id_barang = $req->id_barang[$i];
+
                 $transaction->jumlah = $req->jumlah_barang[$i];
                 $transaction->total_barang = $req->total_barang[$i];
                 $transaction->subtotal = $req->subtotal;
@@ -110,11 +108,11 @@ class TransactionManageController extends Controller
             }
 
             for ($j = 0; $j < $jml_barang; $j++) {
-                $product = Product::where('kode_barang', '=', $req->kode_barang[$j])
+                $product = Product::where('id', '=', $req->id_barang[$j])
                     ->first();
                 $product->stok = $product->stok - $req->jumlah_barang[$j];
                 $product->save();
-                $product_status = Product::where('kode_barang', '=', $req->kode_barang[$j])
+                $product_status = Product::where('id', '=', $req->id_barang[$j])
                     ->first();
                 if ($product_status->stok == 0) {
                     $product_status->keterangan = 'Habis';
@@ -148,7 +146,8 @@ class TransactionManageController extends Controller
                 ->select('transaksi.*')
                 ->first();
             $transactions = Transaction::where('transaksi.kode_transaksi', '=', $id)
-                ->select('transaksi.*')
+                ->join('produk', 'transaksi.id_barang', '=', 'produk.id')
+                ->select('transaksi.*', 'produk.*')
                 ->get();
             $diskon = $transaction->subtotal * $transaction->diskon / 100;
 

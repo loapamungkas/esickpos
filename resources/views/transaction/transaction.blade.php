@@ -259,14 +259,14 @@
 
 $(document).on('click', '.btn-pilih', function(e){
   e.preventDefault();
-  var kode_barang = $(this).prev().prev().children().first().text();
+  var id_barang = $(this).prev().prev().children().first().text();
   $.ajax({
-    url: "{{ url('/transaction/product') }}/" + kode_barang,
+    url: "{{ url('/transaction/product') }}/" + id_barang,
     method: "GET",
     success:function(response){
       var check = $('.kode-barang-td:contains('+ response.product.kode_barang +')').length;
       if(check == 0){
-        tambahData(response.product.kode_barang, response.product.nama_barang, response.product.harga, response.product.stok, response.status);
+        tambahData(response.product.id, response.product.kode_barang, response.product.nama_barang, response.product.harga, response.product.stok, response.status);
       }else{
         swal(
             "",
