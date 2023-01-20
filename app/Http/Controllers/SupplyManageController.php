@@ -9,21 +9,19 @@ use Carbon\Carbon;
 use App\Acces;
 use App\Supply;
 use App\Product;
-use App\Activity;
 use Illuminate\Http\Request;
 
 class SupplyManageController extends Controller
 {
-
-
     // Show View Supply
     public function viewSupply()
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             $supplies = Supply::all();
+            // $supplies = Supply::select('pasok.*')->latest()->take(5)->get();
             $array = array();
             foreach ($supplies as $no => $supply) {
                 array_push($array, $supplies[$no]->created_at->toDateString());
@@ -42,7 +40,7 @@ class SupplyManageController extends Controller
     public function viewNewSupply()
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             $products = Product::all()
@@ -58,7 +56,7 @@ class SupplyManageController extends Controller
     public function checkSupplyCheck($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             $check_product = Product::where('id', $id)
@@ -78,7 +76,7 @@ class SupplyManageController extends Controller
     public function checkSupplyData($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
 
         if ($check_access->kelola_barang == 1) {
@@ -95,7 +93,7 @@ class SupplyManageController extends Controller
     public function createSupply(Request $req)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             $jumlah_data = 0;
@@ -114,14 +112,6 @@ class SupplyManageController extends Controller
                 $supply->save();
                 $jumlah_data += 1;
             }
-
-            $activity = new Activity;
-            $activity->id_user = Auth::id();
-            $activity->user = Auth::user()->nama;
-            $activity->nama_kegiatan = 'pasok';
-            $activity->jumlah = $jumlah_data;
-            $activity->save();
-
             Session::flash('create_success', 'Barang berhasil dipasok');
 
             return redirect('/supply');
@@ -135,7 +125,7 @@ class SupplyManageController extends Controller
     public function exportSupply(Request $req)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             $jenis_laporan = $req->jns_laporan;

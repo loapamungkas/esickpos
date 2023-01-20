@@ -1,16 +1,16 @@
-// $(document).ready(function () {
-//     $("input[name=search]").on("keyup", function () {
-//         var searchTerm = $(this).val().toLowerCase();
-//         $("tbody tr").each(function () {
-//             var lineStr = $(this).text().toLowerCase();
-//             if (lineStr.indexOf(searchTerm) == -1) {
-//                 $(this).hide();
-//             } else {
-//                 $(this).show();
-//             }
-//         });
-//     });
-// });
+$(document).ready(function () {
+    $("input[name=search]").on("keyup", function () {
+        var searchTerm = $(this).val().toLowerCase();
+        $("tbody tr").each(function () {
+            var lineStr = $(this).text().toLowerCase();
+            if (lineStr.indexOf(searchTerm) == -1) {
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
+        });
+    });
+});
 
 (function ($) {
     $.fn.inputFilter = function (inputFilter) {
@@ -48,24 +48,16 @@ $(document).on("input propertychange paste", ".input-notzero", function (e) {
 });
 
 $(function () {
-    $("form[name='update_form']").validate({
+    $("form[name='create_form']").validate({
         rules: {
-            kode_barang: "required",
-            nama_barang: "required",
-            kategori: "required",
-            stok: "required",
-            harga: "required",
+            nama_kategori: "required",
         },
         messages: {
-            kode_barang: "Kode barang tidak boleh kosong",
-            nama_barang: "Nama barang tidak boleh kosong",
-            kategori: "Silakan pilih jenis barang",
-            stok: "Stok barang tidak boleh kosong",
-            harga: "Harga barang tidak boleh kosong",
+            nama_kategori: "Nama Kategori tidak boleh kosong",
         },
         errorPlacement: function (error, element) {
             var name = element.attr("name");
-            $("#" + name + "_error").html(error);
+            $("#nama_kategori_error").html(error);
         },
         submitHandler: function (form) {
             form.submit();
@@ -75,22 +67,14 @@ $(function () {
 
 var validator = $("form[name='update_form']").validate({
     rules: {
-        kode_barang: "required",
-        nama_barang: "required",
-        kategori: "required",
-        stok: "required",
-        harga: "required",
+        nama_kategori: "required",
     },
     messages: {
-        kode_barang: "Kode barang tidak boleh kosong",
-        nama_barang: "Nama barang tidak boleh kosong",
-        kategori: "Silakan pilih jenis barang",
-        stok: "Stok barang tidak boleh kosong",
-        harga: "Harga barang tidak boleh kosong",
+        nama_kategori: "Nama Kategori tidak boleh kosong",
     },
     errorPlacement: function (error, element) {
         var name = element.attr("name");
-        $("#" + name + "_error").html(error);
+        $("#nama_kategori_error").html(error);
     },
     submitHandler: function (form) {
         form.submit();

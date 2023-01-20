@@ -13,9 +13,10 @@ class ViewManageController extends Controller
     public function viewDashboard()
     {
         $kd_transaction = Transaction::select('kode_transaksi')
+            // ->join('users', 'transaksi.id_user', '=', 'users.id')
             ->latest()
             ->distinct()
-            ->take(5)
+            ->take(6)
             ->get();
         $transactions = Transaction::all();
         $array = array();

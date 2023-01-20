@@ -3,13 +3,13 @@
 <link rel="stylesheet" href="{{ asset('css/dashboard/style.css') }}">
 @endsection
 @section('content')
-<div class="row page-title-header">
+{{-- <div class="row page-title-header">
   <div class="col-12">
     <div class="page-header d-flex justify-content-between align-items-center">
       <h4 class="page-title">Dashboard</h4>
     </div>
   </div>
-</div>
+</div> --}}
 <div class="row">
   <div class="col-lg-6 col-md-6 col-sm-12 col-12">
     <div class="row">
@@ -53,14 +53,6 @@
             <div class="row">
               <div class="col-12 mb-4 d-flex justify-content-between align-items-center">
                 <h5 class="font-weight-semibold chart-title">Pemasukan 7 Hari Terakhir</h5>
-                {{-- @php
-                $access = \App\Acces::where('user', auth()->user()->id)
-                ->first();
-                @endphp
-                @if (Auth::user()->role == 'admin')
-                <button class="btn btn-view-transaction" type="button"
-                  data-access="{{ $access->kelola_laporan }}">Semua</button>
-                @endif --}}
                 <div class="dropdown">
                   <button class="btn btn-filter-chart icon-btn dropdown-toggle" type="button"
                     id="dropdownMenuIconButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -85,23 +77,23 @@
     <div class="card b-radius card-noborder">
       <div class="card-body">
         <div class="row">
-          <div class="col-12 text-center">
+          <div class="col-12 text-center mb-2">
             <p class="m-0">Total Pemasukan</p>
             <h2 class="font-weight-bold">Rp. {{ number_format($all_incomes,2,',','.') }}</h2>
             <p class="m-0 txt-light">{{ date('d M, Y', strtotime($min_date)) }} - {{ date('d M, Y',
               strtotime($max_date)) }}</p>
           </div>
-          <div class="col-12 text-center mt-4">
+          {{-- <div class="col-12 text-center mt-4">
             <div class="btn-view-all">
               <i class="mdi mdi-chevron-down"></i>
             </div>
-          </div>
+          </div> --}}
           <div class="col-12">
             <hr>
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center mt-2">
               <h5 class="font-weight-semibold">Riwayat Transaksi</h5>
               @php
-              $access = \App\Acces::where('user', auth()->user()->id)
+              $access = \App\Acces::where('id_user', auth()->user()->id)
               ->first();
               @endphp
               @if (Auth::user()->role == 'admin')
@@ -113,8 +105,10 @@
           <div class="col-12">
             @foreach($kd_transaction as $transaksi)
             @php
-            $ket_transaksi = \App\Transaction::join('users', 'transaksi.id_user', '=', 'users.id')
-            ->where('kode_transaksi', $transaksi->kode_transaksi)
+            $ket_transaksi = \App\Transaction::
+            where('kode_transaksi', $transaksi->kode_transaksi)
+            ->join('users', 'transaksi.id_user', '=', 'users.id')
+            ->select('transaksi.*', 'users.nama')
             ->first();
             @endphp
             <div class="text-group mt-3">
@@ -129,7 +123,8 @@
                       $ket_transaksi->nama }}</p>
                   </div>
                 </div>
-                <span class="w-transaksi">{{ Carbon\Carbon::parse($ket_transaksi->created_at)->diffForHumans()}}</span>
+                <span class="w-transaksi">{{
+                  Carbon\Carbon::parse($ket_transaksi->created_at)->diffForHumans()}}</span>
               </div>
             </div>
             @endforeach
@@ -160,7 +155,7 @@ var myChart = new Chart(ctx, {
         labels: [
         @if(count($incomes) != 0)
         @foreach($incomes as $income)
-        "{{ date('d M, Y', strtotime($income)) }}",
+        "{{ date('Y-d-m', strtotime($income)) }}",
         @endforeach
         @endif
         ],
@@ -170,13 +165,6 @@ var myChart = new Chart(ctx, {
             @if(count($incomes) != 0)
             @foreach($incomes as $income)
             @php
-            // $total = \App\Transaction::whereDate('created_at', $income)
-            // ->select('kode_transaksi')
-            // ->distinct()
-            // ->sum('total');
-            
-            // $total = \App\Transaction::whereDate('created_at', $income)
-            // ->sum('total_barang');
             
             $total = \App\Transaction::whereDate('created_at', $income)
             ->select('transaksi.kode_transaksi','transaksi.total')

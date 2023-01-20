@@ -24,7 +24,7 @@ class UserManageController extends Controller
         $users->save();
 
         $access = new Acces;
-        $access->user = $users->id;
+        $access->id_user = $users->id;
         $access->kelola_akun = 1;
         $access->kelola_barang = 1;
         $access->transaksi = 1;
@@ -40,7 +40,7 @@ class UserManageController extends Controller
     public function viewAccount()
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_akun == 1) {
             $users = User::all();
@@ -55,7 +55,7 @@ class UserManageController extends Controller
     public function viewNewAccount()
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_akun == 1) {
             return view('manage_account.new_account');
@@ -68,7 +68,7 @@ class UserManageController extends Controller
     public function filterTable($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_akun == 1) {
             $users = User::orderBy($id, 'asc')
@@ -84,7 +84,7 @@ class UserManageController extends Controller
     public function createAccount(Request $req)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_akun == 1) {
 
@@ -108,7 +108,7 @@ class UserManageController extends Controller
                 $users->save();
                 if ($req->role == 'admin') {
                     $access = new Acces;
-                    $access->user = $users->id;
+                    $access->id_user = $users->id;
                     $access->kelola_akun = 1;
                     $access->kelola_barang = 1;
                     $access->transaksi = 1;
@@ -116,7 +116,7 @@ class UserManageController extends Controller
                     $access->save();
                 } else {
                     $access = new Acces;
-                    $access->user = $users->id;
+                    $access->id_user = $users->id;
                     $access->kelola_akun = 0;
                     $access->kelola_barang = 1;
                     $access->transaksi = 1;
@@ -138,7 +138,7 @@ class UserManageController extends Controller
                 $users->save();
                 if ($req->role == 'admin') {
                     $access = new Acces;
-                    $access->user = $users->id;
+                    $access->id_user = $users->id;
                     $access->kelola_akun = 1;
                     $access->kelola_barang = 1;
                     $access->transaksi = 1;
@@ -146,11 +146,11 @@ class UserManageController extends Controller
                     $access->save();
                 } else {
                     $access = new Acces;
-                    $access->user = $users->id;
+                    $access->id_user = $users->id;
                     $access->kelola_akun = 0;
                     $access->kelola_barang = 1;
                     $access->transaksi = 1;
-                    $access->kelola_laporan = 1;
+                    $access->kelola_laporan = 0;
                     $access->save();
                 }
 
@@ -179,7 +179,7 @@ class UserManageController extends Controller
     public function editAccount($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_akun == 1) {
             $user = User::find($id);
@@ -194,7 +194,7 @@ class UserManageController extends Controller
     public function updateAccount(Request $req)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_akun == 1) {
             $user_account = User::find($req->id);
@@ -262,11 +262,11 @@ class UserManageController extends Controller
     public function deleteAccount($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_akun == 1) {
             User::destroy($id);
-            Acces::where('user', $id)->delete();
+            Acces::where('id_user', $id)->delete();
 
             Session::flash('delete_success', 'Akun berhasil dihapus');
 

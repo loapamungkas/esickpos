@@ -10,45 +10,8 @@
     </div>
   </div>
 </div>
-<div class="row modal-group">
-  <div class="modal fade" id="activityModal" tabindex="-1" role="dialog" aria-labelledby="activityModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="activityModalLabel">Riwayat Aktivitas</h5>
-          <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-12">
-              <div class="form-group">
-                <input type="text" class="form-control" name="search" placeholder="Cari">
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="list-group activity-list">
-                @foreach($activities as $act)
-                <div class="list-group-item flex-column align-items-start">
-                  <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1 text-uppercase">{{ $act->nama_kegiatan }}</h5>
-                    <small>{{ date('d M, Y', strtotime($act->created_at)) }}</small>
-                  </div>
-                  <p class="mb-1">{{ date('H:i', strtotime($act->created_at)) }} | {{ $act->jumlah }} Jenis Barang</p>
-                </div>
-                @endforeach
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 <div class="row">
-  <div class="col-lg-8 col-md-6 col-sm-6 col-12">
+  <div class="col-lg-9 col-md-6 col-sm-6 col-12">
     <div class="card card-noborder b-radius">
       <div class="card-body">
         <div class="row">
@@ -122,7 +85,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-4 col-md-6 col-sm-6 account-detail mb-4 col-12">
+  <div class="col-lg-3 col-md-6 col-sm-6 account-detail mb-4 col-12">
     <div class="card card-noborder b-radius">
       <div class="card-body">
         <div class="row">
@@ -140,43 +103,23 @@
             <p class="nama-akun">{{ auth()->user()->nama }}</p>
             <p class="posisi-akun">{{ auth()->user()->role }}</p>
           </div>
-          <div class="col-12 mt-3 d-flex justify-content-between align-items-start">
-            <div class="d-flex justify-content-start align-items-start">
-              <div class="icon mr-3">
-                <i class="mdi mdi-email-outline"></i>
-              </div>
-              <div class="text-group">
-                <p class="email-text">Email</p>
-                <p class="email-akun">{{ auth()->user()->email }}</p>
-              </div>
+          <div class="col-12 mt-3 d-flex justify-content-start align-items-start">
+            <div class="icon mr-3">
+              <i class="mdi mdi-account-outline"></i>
             </div>
-            <div class="d-flex justify-content-start align-items-start">
-              <div class="icon mr-3">
-                <i class="mdi mdi-account-outline"></i>
-              </div>
-              <div class="text-group">
-                <p class="username-text">Username</p>
-                <p class="username-akun">{{ auth()->user()->username }}</p>
-              </div>
+            <div class="text-group">
+              <p class="username-text">Username</p>
+              <p class="username-akun">{{ auth()->user()->username }}</p>
             </div>
           </div>
-          <div class="col-12 mt-5 d-flex justify-content-between">
-            <p class="aktivitas-text">Aktivitas Terbaru</p>
-            <div class="history-btn" data-toggle="modal" data-target="#activityModal">
-              <i class="mdi mdi-history"></i>
+          <div class="col-12 mt-3 d-flex justify-content-start align-items-start">
+            <div class="icon mr-3">
+              <i class="mdi mdi-email-outline"></i>
             </div>
-          </div>
-          <div class="col-12">
-            @foreach($activity as $act)
-            <div class="text-group mt-2">
-              <div class="d-flex justify-content-between">
-                <p class="nama-aktivitas">{{ $act->nama_kegiatan }}</p>
-                <span class="des-aktivitas">{{ date('d M', strtotime($act->created_at)) }}</span>
-              </div>
-              <p class="des-aktivitas">{{ date('H:i', strtotime($act->created_at)) }} | {{ $act->jumlah }} Jenis Barang
-              </p>
+            <div class="text-group">
+              <p class="email-text">Email</p>
+              <p class="email-akun">{{ auth()->user()->email }}</p>
             </div>
-            @endforeach
           </div>
         </div>
       </div>

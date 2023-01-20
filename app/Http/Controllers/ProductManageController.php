@@ -12,22 +12,34 @@ use App\Transaction;
 use App\Imports\ProductImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProductManageController extends Controller
 {
     // Show View Product
+    public function searchProduct(Request $request)
+    {
+        $search = $request->get('search');
+        $products = Product::join('kategori', 'produk.id_kategori', '=', 'kategori.id')
+            ->where('nama_barang', 'LIKE', "%$search%")
+            ->orWhere('kode_barang', 'LIKE', "%$search%")
+            ->orderBy('kode_barang')
+            ->paginate(5);
+        $kategoris = Kategori::all();
+        return view('manage_product.product', compact('products', 'kategoris'));
+    }
+
     public function viewProduct()
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             $products = Product::join('kategori', 'produk.id_kategori', '=', 'kategori.id')
                 ->select('produk.*', 'kategori.nama_kategori')
                 ->orderBy('kode_barang')
-                ->get();
+                ->paginate(5);
             $kategoris = Kategori::all();
-
             return view('manage_product.product', compact('products', 'kategoris'));
         } else {
             return back();
@@ -38,7 +50,7 @@ class ProductManageController extends Controller
     public function viewNewProduct()
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             $kategoris = Kategori::all();
@@ -53,7 +65,7 @@ class ProductManageController extends Controller
     public function filterTable($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             $products = Product::join('kategori', 'produk.id_kategori', '=', 'kategori.id')
@@ -71,7 +83,7 @@ class ProductManageController extends Controller
     public function createProduct(Request $req)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             $check_product = Product::where('kode_barang', $req->kode_barang)
@@ -103,7 +115,7 @@ class ProductManageController extends Controller
     public function importProduct(Request $req)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             try {
@@ -129,7 +141,7 @@ class ProductManageController extends Controller
     public function editProduct($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             $product = Product::find($id);
@@ -144,7 +156,7 @@ class ProductManageController extends Controller
     public function updateProduct(Request $req)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             $check_product = Product::where('kode_barang', $req->kode_barang)
@@ -187,7 +199,7 @@ class ProductManageController extends Controller
     public function deleteProduct($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             Product::destroy($id);

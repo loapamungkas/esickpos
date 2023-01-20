@@ -14,7 +14,7 @@ class KategoriManageController extends Controller
     public function viewKategori()
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             $kategoris = Kategori::all();
@@ -29,7 +29,7 @@ class KategoriManageController extends Controller
     public function createKategori(Request $req)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
 
@@ -59,7 +59,7 @@ class KategoriManageController extends Controller
     public function editKategori($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             $kategori = Kategori::find($id);
@@ -74,7 +74,7 @@ class KategoriManageController extends Controller
     public function updateKategori(Request $req)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             $kategori = Kategori::find($req->id);
@@ -92,7 +92,7 @@ class KategoriManageController extends Controller
     public function deleteKategori($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_barang == 1) {
             Kategori::destroy($id);

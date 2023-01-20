@@ -77,9 +77,9 @@
     border: 0;
     color: #2bc73f;
     font-size: 14px;
-    width: 35px;
-    min-width: 35px;
-    height: 35px;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
     padding: 5px;
 }
 
@@ -138,4 +138,27 @@
 
 .dot {
     font-size: 5px !important;
+}
+
+.form-control.search-barang {
+    border: none;
+    height: 40px;
+    border-radius: 5px;
+}
+.shadow-sm {
+    border-radius: 5px;
+}
+.input-group-append {
+    border-radius: 5px;
+    height: 40px;
+}
+.btn-search {
+    background-color: #fff;
+    color: #2bc73f;
+    border-radius: 5px;
+}
+
+.btn-search:hover {
+    background-color: #fff;
+    color: #21a032;
 }

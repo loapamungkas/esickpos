@@ -81,6 +81,16 @@
     font-size: 12px;
 }
 
+.btn-pilih {
+    color: #2bc73f;
+    border: 1px solid #2bc74038;
+}
+.btn-pilih:hover {
+    color: #2bc73f;
+    background-color: #2bc74038;
+    border: 1px solid #2bc74058;
+}
+
 .btn-operate {
     color: #262626;
     font-weight: bold !important;
@@ -343,4 +353,8 @@ video {
     color: #19d895;
     background-color: rgba(25, 216, 149, 0.2);
     border-color: rgba(25, 216, 149, 0);
+}
+
+.txt-id {
+    visibility: hidden;
 }

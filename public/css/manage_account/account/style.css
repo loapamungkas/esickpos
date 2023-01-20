@@ -153,3 +153,26 @@
 .search-dropdown input {
     margin-left: 15px !important;
 }
+
+.form-control.search-barang {
+    border: none;
+    height: 40px;
+    border-radius: 5px;
+}
+.shadow-sm {
+    border-radius: 5px;
+}
+.input-group-append {
+    border-radius: 5px;
+    height: 40px;
+}
+.btn-search {
+    background-color: #fff;
+    color: #2bc73f;
+    border-radius: 5px;
+}
+
+.btn-search:hover {
+    background-color: #fff;
+    color: #21a032;
+}

@@ -6,7 +6,7 @@
 <div class="row page-title-header">
   <div class="col-12">
     <div class="page-header d-flex justify-content-start align-items-center">
-      <h4 class="page-title">Daftar Barang</h4>
+      <h4 class="page-title">Transaksi</h4>
     </div>
   </div>
 </div>
@@ -32,9 +32,9 @@
               <ul class="list-group product-list">
                 @foreach($products as $product)
                 @if($product->stok != 0)
-                <li class="list-group-item d-flex justify-content-between align-items-center active-list">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
                   <div class="text-group">
-                    <p class="m-0 txt-light">{{ $product->id }}</p>
+                    <p class="mb-n3 txt-light txt-id">{{ $product->id }}</p>
                     <p class="m-0">{{ $product->kode_barang }}</p>
                     <p class="m-0 txt-light">{{ $product->nama_barang }}</p>
                   </div>
@@ -68,7 +68,7 @@
             @php
             $transaksi = \App\Transaction::join('users', 'transaksi.id_user', '=', 'users.id')
             ->where('transaksi.kode_transaksi', '=', $message)
-            ->select('transaksi.*')
+            ->select('transaksi.*','users.nama')
             ->first();
             @endphp
             <div class="col-12">

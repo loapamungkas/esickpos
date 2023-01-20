@@ -8,37 +8,19 @@
     <div class="page-header d-flex justify-content-between align-items-center">
       <h4 class="page-title">Daftar Barang</h4>
       <div class="d-flex justify-content-start">
-        <div class="dropdown">
-          <button class="btn btn-icons btn-inverse-primary btn-filter shadow-sm" type="button"
-            id="dropdownMenuIconButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="mdi mdi-filter-variant"></i>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuIconButton1">
-            <h6 class="dropdown-header">Urut Berdasarkan :</h6>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item filter-btn" data-filter="kode_barang">Kode Barang</a>
-            <a href="#" class="dropdown-item filter-btn" data-filter="id_kategori">Kategori</a>
-            <a href="#" class="dropdown-item filter-btn" data-filter="nama_barang">Nama Barang</a>
-            <a href="#" class="dropdown-item filter-btn" data-filter="stok">Stok Barang</a>
-            <a href="#" class="dropdown-item filter-btn" data-filter="harga">Harga Barang</a>
-          </div>
-        </div>
-        <div class="dropdown dropdown-search">
-          <button class="btn btn-icons btn-inverse-primary btn-filter shadow-sm ml-2" type="button"
-            id="dropdownMenuIconButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="mdi mdi-magnify"></i>
-          </button>
-          <div class="dropdown-menu search-dropdown" aria-labelledby="dropdownMenuIconButton1">
-            <div class="row">
-              <div class="col-11">
-                <input type="text" class="form-control" name="search" placeholder="Cari barang">
-              </div>
+        <form action="{{url('product/search')}}">
+          <div class="input-group shadow-sm">
+            <input type="text" class="form-control search-barang" placeholder="Cari Barang" id="search" name="search"
+              value="{{Request::get('search')}}">
+            <div class="input-group-append">
+              <button class="btn btn-search" type="submit"><i class="mdi mdi-magnify"></i></button>
             </div>
           </div>
-        </div>
-        <a href="{{ url('/product/new') }}" class="btn btn-icons btn-inverse-primary btn-new ml-2">
+        </form>
+        <a href="{{ url('/product/new') }}" class="btn btn-icons btn-new ml-2">
           <i class="mdi mdi-plus"></i>
         </a>
+
       </div>
     </div>
   </div>
@@ -140,7 +122,7 @@
     <div class="card card-noborder b-radius">
       <div class="card-body">
         <div class="row">
-          <div class="col-12 table-responsive">
+          <div class="col-12 table-responsive x_content">
             <table class="table table-custom">
               <thead>
                 <tr>
@@ -187,6 +169,9 @@
                 @endforeach
               </tbody>
             </table>
+            <div class="mt-2 d-flex align-items-end justify-content-end">
+              {{$products->withQueryString()->links()}}
+            </div>
           </div>
         </div>
       </div>
@@ -277,5 +262,6 @@
       }
     });
   });
+
 </script>
 @endsection

@@ -7,6 +7,22 @@ $(document).ready(function () {
     });
 });
 
+// $(document).ready(function () {
+//     $("input[name=search]").on("keyup", function () {
+//         var searchTerm = $(this).val().toLowerCase();
+//         $(".list-date table").each(function () {
+//             var lineStr = $(this).text().toLowerCase();
+//             if (lineStr.indexOf(searchTerm) == -1) {
+//                 $(this).parent().hide();
+//                 $(this).parent().prev().hide();
+//             } else {
+//                 $(this).parent().show();
+//                 $(this).parent().prev().show();
+//             }
+//         });
+//     });
+// });
+
 $(document).ready(function () {
     $("input[name=search]").on("keyup", function () {
         var searchTerm = $(this).val().toLowerCase();

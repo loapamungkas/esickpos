@@ -4,26 +4,33 @@
 }
 
 .btn-new:hover {
-    background-color: #2bc73f;
+    background-color: #21a032;
     color: #fff;
 }
-
-.btn-filter {
-    background-color: #fff;
-    color: #2bc73f;
+.shadow-sm {
+    border-radius: 5px;
+}
+.input-group-append {
+    border-radius: 5px;
 }
 
-.btn-filter:hover {
+.btn-search {
+    background-color: #fff;
+    color: #2bc73f;
+    border-radius: 5px;
+}
+
+.btn-search:hover {
     background-color: #fff;
     color: #21a032;
 }
 
-.btn-filter:hover,
+.btn-search:hover,
 .btn-new:hover {
     border: 0px solid #21a032;
 }
 
-.btn-filter:not(:hover),
+.btn-search:not(:hover),
 .btn-new:not(:hover) {
     border: 0px solid #2bc73f;
 }
@@ -172,4 +179,40 @@ video {
 .text-instruction {
     color: #2bc73f;
     font-weight: bold;
+}
+
+.numbering {
+    background-color: #d3eafc;
+    color: #2bc73f;
+
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #2bc73f;
+    border-color: #2bc73f;
+}
+.page-item .page-link {
+    z-index: 1;
+    color: #2bc73f;
+}
+
+.form-control.search-barang {
+    border: none;
+    height: 40px;
+    border-radius: 5px;
 }

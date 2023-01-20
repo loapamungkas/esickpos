@@ -203,10 +203,11 @@
 }
 
 .btn-print {
-    background-color: transparent;
-    border: 1px solid #ced4da;
     color: #000;
     font-weight: bold;
+    background-color: #fff;
+    border-radius: 5px;
+    height: 40px;
 }
 
 .print-icon {

@@ -34,11 +34,11 @@
           <img src="{{ asset('icons/logo-mini.png') }}" alt="logo" /> </a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center">
-        {{-- <form class="search-form d-none d-md-block" action="#">
+        <form class="search-form d-none d-md-block" action="#">
           <div class="form-group">
             <input type="search" class="form-control" name="search_page" placeholder="Cari Halaman">
           </div>
-        </form> --}}
+        </form>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown">
             @php
@@ -63,7 +63,7 @@
                     </div>
                     @foreach($notification as $notif)
                     @if($notif->stok != 0)
-                    <a class="dropdown-item preview-item py-3">
+                    <a href="{{url('/supply')}}" class="dropdown-item preview-item py-3">
                       <div class="preview-thumbnail">
                         <i class="mdi mdi-alert m-auto text-warning"></i>
                       </div>
@@ -118,6 +118,14 @@
       <!-- SideNav -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
+          <li class="nav-profile">
+            <a href="{{ url('/profile') }}" class="nav-link">
+              <div class="text-wrapper text-center">
+                <p class="profile-name">{{ auth()->user()->nama }}</p>
+                <p class="designation">{{ auth()->user()->role }}</p>
+              </div>
+            </a>
+          </li>
           <li class="nav-item nav-category">Daftar Menu</li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url('/dashboard') }}">
@@ -125,7 +133,7 @@
             </a>
           </li>
           @php
-          $access = \App\Acces::where('user', auth()->user()->id)
+          $access = \App\Acces::where('id_user', auth()->user()->id)
           ->first();
           @endphp
           @if($access->kelola_akun == 1)
@@ -195,6 +203,12 @@
             </div>
           </li>
           @endif
+          <li class="text-center mb-3">
+            <hr>
+            <a class="btn-logout" href="{{ url('/logout') }}">
+              Logout
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- End-SideNav -->

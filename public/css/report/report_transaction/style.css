@@ -185,10 +185,10 @@
 }
 
 .btn-print {
-    background-color: transparent;
-    border: 1px solid #ced4da;
     color: #000;
     font-weight: bold;
+    background-color: #fff;
+    border-radius: 5px;
 }
 
 .btn-filter-chart,
@@ -233,4 +233,28 @@
     border: 1px solid #ced4da;
     color: #2bc73f;
     font-weight: bold;
+}
+
+.form-control.search-barang {
+    border: none;
+    height: 40px;
+    border-radius: 5px;
+}
+.shadow-sm {
+    border-radius: 5px;
+}
+.input-group-append {
+    border-radius: 5px;
+    height: 40px;
+}
+.btn-search {
+    background-color: #fff;
+    color: #2bc73f;
+    border-radius: 5px;
+}
+
+.btn-search:hover {
+    background-color: #fff;
+    color: #21a032;
+    border-radius: 5px;
 }

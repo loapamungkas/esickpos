@@ -9,12 +9,13 @@
             <h4 class="page-title">Daftar Kategori</h4>
             <div class="d-flex justify-content-start">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <i class="mdi mdi-magnify"></i>
+
+                    <div class="input-group shadow-sm">
+                        <input type="text" class="form-control search-barang" name="search" placeholder="Cari Kategori">
+                        <div class="input-group-append">
+                            <button class="btn btn-search"><i class="mdi mdi-magnify"></i></button>
                         </div>
                     </div>
-                    <input type="text" class="form-control" name="search" placeholder="Cari Kategori">
                 </div>
             </div>
         </div>
@@ -68,15 +69,17 @@
                         <table class="table table-custom">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>No</th>
+                                    {{-- <th>Id</th> --}}
                                     <th>Nama Kategori</th>
-                                    <th></th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($kategoris as $kategori)
                                 <tr>
-                                    <td><span class="btn habis-span">{{ $kategori->id }}</span></td>
+                                    <td><span class="numbering">{{ $loop->iteration }}</span></td>
+                                    {{-- <td><span class="btn habis-span">{{ $kategori->id }}</span></td> --}}
                                     <td>{{ $kategori->nama_kategori }}</td>
                                     <td>
                                         <button type="button" class="btn btn-edit btn-icons btn-rounded btn-secondary"
@@ -117,7 +120,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 mt-2 d-flex justify-content-end">
-                                    <button class="btn btn-simpan btn-sm btn-new" type="submit"><i
+                                    <button class="btn btn-sm btn-new" type="submit"><i
                                             class="mdi mdi-content-save"></i>
                                         Simpan</button>
                                 </div>
@@ -132,7 +135,7 @@
 @endsection
 @section('script')
 <script src="{{ asset('plugins/js/quagga.min.js') }}"></script>
-<script src="{{ asset('js/manage_product/product/script.js') }}"></script>
+<script src="{{ asset('js/manage_product/kategori/script.js') }}"></script>
 <script type="text/javascript">
     @if ($message = Session::get('create_success'))
     swal(

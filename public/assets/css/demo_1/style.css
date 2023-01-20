@@ -773,6 +773,7 @@
 }
 .sidebar > .nav .nav-item.active > .nav-link {
     color: #fff;
+    background-color: #21a032;
 }
 .sidebar > .nav .nav-item.active > .nav-link .menu-title,
 .sidebar > .nav .nav-item.active > .nav-link i {
@@ -856,7 +857,7 @@
     > .nav:not(.sub-menu)
     > .nav-item:hover:not(.nav-profile):not(.hover-open)
     > .nav-link:not([aria-expanded="true"]) {
-    background: #2bc73f;
+    background-color: #21a032;
     padding-left: 65px;
 }
 .sidebar

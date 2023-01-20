@@ -10,13 +10,13 @@
       <h4 class="page-title">Laporan Transaksi</h4>
       <div class="print-btn-group">
         <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text">
-              <i class="mdi mdi-export print-icon"></i>
-            </div>
-            <button class="btn btn-print" type="button" data-toggle="modal" data-target="#cetakModal">Export
-              Laporan</button>
+          <input type="text" name="search" class="form-control search-barang" placeholder="Cari tanggal">
+          <div class="input-group-append">
+            <button class="btn btn-search"><i class="mdi mdi-magnify"></i></button>
           </div>
+          <button class="btn btn-print ml-2" type="button" data-toggle="modal" data-target="#cetakModal">Export
+            Laporan <i class="mdi mdi-export print-icon ml-2"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -109,38 +109,11 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-12 mb-4" hidden="">
-    <div class="card card-noborder b-radius">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-              <h5>Statistik Pemasukan</h5>
-              <div class="dropdown">
-                <button class="btn btn-filter-chart icon-btn dropdown-toggle" type="button" id="dropdownMenuIconButton1"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  1 Minggu Terakhir
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuIconButton1">
-                  <a class="dropdown-item chart-filter" href="#" data-filter="minggu">1 Minggu Terakhir</a>
-                  <a class="dropdown-item chart-filter" href="#" data-filter="bulan">1 Bulan Terakhir</a>
-                  <a class="dropdown-item chart-filter" href="#" data-filter="tahun">1 Tahun Terakhir</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 mt-4">
-            <canvas id="myChart" style="width: 100%; height: 350px;"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="col-12 grid-margin">
     <div class="card card-noborder b-radius">
       <div class="card-body">
         <div class="row">
-          <div class="col-12 mb-2">
+          {{-- <div class="col-12 mb-2">
             <form name="filter_form" method="POST">
               @csrf
               <div class="form-group row align-items-center filter-group">
@@ -170,7 +143,7 @@
                 </div>
               </div>
             </form>
-          </div>
+          </div> --}}
           <div class="col-12">
             <ul class="list-date">
               @foreach($dates as $date)

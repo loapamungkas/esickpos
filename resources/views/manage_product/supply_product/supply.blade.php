@@ -9,27 +9,18 @@
     <div class="page-header d-flex justify-content-between align-items-center">
       <h4 class="page-title">Riwayat Pasok</h4>
       <div class="d-flex justify-content-start">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
-            <i class="mdi mdi-export print-icon"></i>
+        <div class="input-group shadow-sm">
+          <input type="text" name="search" class="form-control search-barang" placeholder="Cari tanggal">
+          <div class="input-group-append">
+            <button class="btn btn-search"><i class="mdi mdi-magnify"></i></button>
           </div>
-          <button class="btn btn-print" type="button" data-toggle="modal" data-target="#cetakModal">Export
-            Laporan</button>
         </div>
-        <div class="dropdown dropdown-search">
-          <button class="btn btn-icons btn-inverse-primary btn-filter shadow-sm ml-2" type="button"
-            id="dropdownMenuIconButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="mdi mdi-magnify"></i>
+        <div class="input-group">
+          <button class="btn btn-print ml-2" type="button" data-toggle="modal" data-target="#cetakModal">Export
+            Laporan <i class="mdi mdi-export print-icon ml-2"></i>
           </button>
-          <div class="dropdown-menu search-dropdown" aria-labelledby="dropdownMenuIconButton1">
-            <div class="row">
-              <div class="col-11">
-                <input type="text" class="form-control" name="search" placeholder="Cari barang">
-              </div>
-            </div>
-          </div>
         </div>
-        <a href="{{ url('/supply/new') }}" class="btn btn-icons btn-inverse-primary btn-new ml-2">
+        <a href="{{ url('/supply/new') }}" class="btn btn-icons btn-inverse-primary btn-new shadow-sm ml-n3">
           <i class="mdi mdi-plus"></i>
         </a>
       </div>
@@ -128,7 +119,7 @@
           <div class="col-12">
             <ul class="list-date">
               @foreach($dates as $date)
-              <li class="txt-light">{{ date('d M, Y', strtotime($date)) }}</li>
+              <li class="txt-light tanggal">{{ date('d M, Y', strtotime($date)) }}</li>
               @php
               $supplies = \App\Supply::join('produk', 'pasok.id_barang', '=', 'produk.id')
               ->join('users', 'pasok.id_user', '=','users.id')
@@ -149,6 +140,7 @@
                   @foreach($supplies as $supply)
                   <tr>
                     <td>
+                      <span hidden class="txt-light">{{date('d M, Y', strtotime($supply->created_at))}}</span>
                       <span class="txt-light">{{ date('H:i', strtotime($supply->created_at)) }}</span>
                     </td>
                     <td class="font-weight-bold big-font">

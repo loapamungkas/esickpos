@@ -7,7 +7,6 @@ use Auth;
 use Session;
 use App\Acces;
 use App\Product;
-use App\Activity;
 use App\Transaction;
 use Illuminate\Http\Request;
 
@@ -17,7 +16,7 @@ class TransactionManageController extends Controller
     public function viewTransaction()
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->transaksi == 1) {
             $products = Product::all()
@@ -33,7 +32,7 @@ class TransactionManageController extends Controller
     public function transactionProduct($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->transaksi == 1) {
             $product = Product::where('id', '=', $id)
@@ -54,7 +53,7 @@ class TransactionManageController extends Controller
     public function transactionProductCheck($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->transaksi == 1) {
             $product_check = Product::where('id', '=', $id)
@@ -85,7 +84,7 @@ class TransactionManageController extends Controller
     public function transactionProcess(Request $req)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->transaksi == 1) {
             $jml_barang = count($req->id_barang);
@@ -118,14 +117,6 @@ class TransactionManageController extends Controller
                     $product_status->save();
                 }
             }
-
-            $activity = new Activity;
-            $activity->id_user = Auth::id();
-            $activity->user = Auth::user()->nama;
-            $activity->nama_kegiatan = 'transaksi';
-            $activity->jumlah = $jml_barang;
-            $activity->save();
-
             Session::flash('transaction_success', $req->kode_transaksi);
 
             return back();
@@ -138,7 +129,7 @@ class TransactionManageController extends Controller
     public function receiptTransaction($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->transaksi == 1) {
             $transaction = Transaction::join('users', 'transaksi.id_user', '=', 'users.id')

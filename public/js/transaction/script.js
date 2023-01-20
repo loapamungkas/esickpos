@@ -221,12 +221,12 @@ $(document).ready(function () {
         var searchTerm = $(this).val().toLowerCase();
         $(".product-list li").each(function () {
             var lineStr = $(this).text().toLowerCase();
-            console.log(lineStr);
+            // console.log(lineStr);
             if (lineStr.indexOf(searchTerm) == -1) {
                 $(this).addClass("non-active-list");
-                $(this).removeClass("active-list");
+                // $(this).removeClass("active-list");
             } else {
-                $(this).addClass("active-list");
+                // $(this).addClass("active-list");
                 $(this).removeClass("non-active-list");
             }
         });

@@ -8,7 +8,6 @@ use App\User;
 use App\Acces;
 use App\Supply;
 use App\Product;
-use App\Activity;
 use App\Kategori;
 use App\Transaction;
 use Illuminate\Http\Request;
@@ -18,21 +17,14 @@ class SearchManageController extends Controller
 	// Search Page Feature
 	public function searchPage($word)
 	{
-		$activity = Activity::where('id_user', Auth::id())
-			->latest()
-			->take(3)
-			->get();
-		$activities = Activity::where('id_user', Auth::id())
-			->latest()
-			->get();
-		$access = Acces::join('users', 'users.id', '=', 'akses.user')
+		$access = Acces::join('users', 'users.id', '=', 'akses.id_user')
 			->select('akses.*', 'users.*')
 			->get();
 		$transactions = Transaction::all();
 		$kode_transaksi_distinct = Transaction::select('kode_transaksi')
 			->distinct()
 			->get();
-		$products = Product::all();
+		$products = Product::join('kategori', 'produk.id_kategori', '=', 'kategori.id')->select('produk.*', 'kategori.nama_kategori')->get();
 		$supplies = Supply::all();
 		$kategoris = Kategori::all();
 		$accounts = User::all();
@@ -84,17 +76,11 @@ class SearchManageController extends Controller
 
 		// Dashboard Content
 		$dashboard_content = 'Dashboard => Pendapatan Harian : Rp. ' . number_format($incomes_daily, 2, ',', '.') . ', Pelanggan Harian : ' . $customers_daily . ' Orang, Total Pemasukan : Rp. ' . number_format($all_incomes, 2, ',', '.') . ' (' . date('d M, Y', strtotime($min_date)) . ' - ' . date('d M, Y', strtotime($max_date)) . ') ';
-		foreach ($kd_transaction as $kode) {
-			$ket_transaksi = Transaction::where('kode_transaksi', $kode->kode_transaksi)
-				->first();
-			$dashboard_content .= 'Riwayat Transaksi Terbaru : (Kode Transaksi : ' . $kode->kode_transaksi . ', Total : ' . number_format($ket_transaksi->total, 2, ',', '.') . ', Kasir : ' . $ket_transaksi->kasir . ', Waktu : ' . Carbon::parse($ket_transaksi->created_at)->diffForHumans() . ') ';
-		}
-		// Profile Content
-		$profile_content = 'Profil => Riwayat Aktivitas';
-		foreach ($activities as $act) {
-			$profile_content .= ' ' . $act->nama_kegiatan . ' ' . date('d M, Y', strtotime($act->created_at)) . ' ' . date('H:i', strtotime($act->created_at)) . ' ' . $act->jumlah . ' Jenis Barang';
-		}
-		$profile_content .= '* Ubah Data Diri (Nama : ' . Auth::user()->nama . ', Email : ' . Auth::user()->email . ', Username ' . Auth::user()->username . ' Simpan Perubahan || * Ubah Password Password Lama Password Baru Ubah Password' . Auth::user()->role . ' Aktivitas Terbaru';
+		// foreach ($kd_transaction as $kode) {
+		// 	$ket_transaksi = Transaction::join('users', 'transaksi.id_user', '=', 'users.id')->where('kode_transaksi', $kode->kode_transaksi)
+		// 		->first();
+		// 	$dashboard_content .= 'Riwayat Transaksi Terbaru : (Kode Transaksi : ' . $kode->kode_transaksi . ', Total : ' . number_format($ket_transaksi->total, 2, ',', '.') . ', Kasir : ' . $ket_transaksi->nama . ', Waktu : ' . Carbon::parse($ket_transaksi->created_at)->diffForHumans() . ') ';
+		// }
 		// Account Content
 		$account_content = 'Daftar Akun => ';
 		foreach ($accounts as $account) {
@@ -116,7 +102,7 @@ class SearchManageController extends Controller
 		// Product
 		$product_content = 'Daftar Barang => Barang : ';
 		foreach ($products as $product) {
-			$product_content .= ' (Kode Barang : ' . $product->kode_barang . ', Jenis Barang : ' . $product->jenis_barang . ', Nama Barang : ' . $product->nama_barang . ', Stok : ' . $product->stok . ', Harga : Rp. ' . number_format($product->harga, 2, ',', '.') . ', Keterangan : ' . $product->keterangan . ')';
+			$product_content .= ' (Kode Barang : ' . $product->kode_barang . ', Kategori : ' . $product->nama_kategori . ', Nama Barang : ' . $product->nama_barang . ', Stok : ' . $product->stok . ', Harga : Rp. ' . number_format($product->harga, 2, ',', '.') . ', Keterangan : ' . $product->keterangan . ')';
 		}
 		// New Product
 		$new_prpduct_content = 'Daftar Barang | Barang Baru : Kode Barang, Nama Barang, Jenis Barang, Berat Barang, Merek Barang, Stok Barang, Harga Barang';
@@ -138,13 +124,13 @@ class SearchManageController extends Controller
 		// Laporan Pegawai
 		$laporan_pegawai_content = 'Laporan | Laporan Pegawai => ';
 		foreach ($accounts as $account) {
-			$transaction_activity = Transaction::where('id_kasir', $account->id)->select('kode_transaksi')->distinct()->get();
-			$supply_activity = Supply::where('id_pemasok', $account->id)->count();
+			$transaction_activity = Transaction::where('id_user', $account->id)->select('kode_transaksi')->distinct()->get();
+			$supply_activity = Supply::where('id_user', $account->id)->count();
 			$laporan_pegawai_content .= ' (Aktivitas Pasok : ' . $supply_activity . ', Aktivitas Transaksi : ' . $transaction_activity->count() . ')';
 		}
 
 		$page_array = array();
-		$access = Acces::where('user', Auth::id())
+		$access = Acces::where('id_user', Auth::id())
 			->first();
 		$number_array = 0;
 		$page_array[$number_array] = array(
@@ -152,13 +138,6 @@ class SearchManageController extends Controller
 			'page_url' => 'dashboard',
 			'page_title' => 'Dashboard',
 			'page_content' => $dashboard_content
-		);
-		$number_array += 1;
-		$page_array[$number_array] = array(
-			'page_name' => 'Profil',
-			'page_url' => 'profile',
-			'page_title' => 'Profil',
-			'page_content' => $profile_content
 		);
 		$number_array += 1;
 		if ($access->kelola_akun == true) {
@@ -198,6 +177,7 @@ class SearchManageController extends Controller
 				'page_title' => 'Daftar Kategori > Kategori Baru',
 				'page_content' => $new_kategori_content
 			);
+			$number_array += 1;
 			$page_array[$number_array] = array(
 				'page_name' => 'Daftar Barang',
 				'page_url' => 'product',
@@ -263,7 +243,6 @@ class SearchManageController extends Controller
 					'page_url' => $page_array[$i]['page_url'],
 					'page_title' => $page_array[$i]['page_title'],
 					'page_content' => $page_array[$i]['page_content']
-
 				);
 			} else {
 				$data_result[$number] = array(

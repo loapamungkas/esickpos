@@ -15,6 +15,11 @@
 			</div>
 			<div class="print-btn-group">
 				<div class="input-group">
+					<button class="btn btn-print" type="button" data-toggle="modal" data-target="#cetakModal">Export
+						Laporan <i class="mdi mdi-export print-icon ml-2"></i>
+					</button>
+				</div>
+				{{-- <div class="input-group">
 					<div class="input-group-prepend">
 						<div class="input-group-text">
 							<i class="mdi mdi-export print-icon"></i>
@@ -22,7 +27,7 @@
 						<button class="btn btn-print" type="button" data-toggle="modal" data-target="#cetakModal">Export
 							Laporan</button>
 					</div>
-				</div>
+				</div> --}}
 			</div>
 		</div>
 	</div>

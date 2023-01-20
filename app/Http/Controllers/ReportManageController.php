@@ -17,7 +17,7 @@ class ReportManageController extends Controller
     public function reportTransaction()
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_laporan == 1) {
             $transactions = Transaction::all();
@@ -51,7 +51,7 @@ class ReportManageController extends Controller
     public function reportWorker()
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_laporan == 1) {
             $users = User::all();
@@ -62,54 +62,11 @@ class ReportManageController extends Controller
         }
     }
 
-    // Filter Report Transaction
-    public function filterTransaction(Request $req)
-    {
-        $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
-            ->first();
-        if ($check_access->kelola_laporan == 1) {
-            $start_date = $req->tgl_awal;
-            $end_date = $req->tgl_akhir;
-            $start_date2 = $start_date[6] . $start_date[7] . $start_date[8] . $start_date[9] . '-' . $start_date[3] . $start_date[4] . '-' . $start_date[0] . $start_date[1] . ' 00:00:00';
-            $end_date2 = $end_date[6] . $end_date[7] . $end_date[8] . $end_date[9] . '-' . $end_date[3] . $end_date[4] . '-' . $end_date[0] . $end_date[1] . ' 23:59:59';
-            $supplies = Transaction::select()
-                ->whereBetween('created_at', array($start_date2, $end_date2))
-                ->get();
-            $array = array();
-            foreach ($supplies as $no => $supply) {
-                array_push($array, $supplies[$no]->created_at->toDateString());
-            }
-            $dates = array_unique($array);
-            rsort($dates);
-
-            return view('report.report_transaction_filter', compact('dates'));
-        } else {
-            return back();
-        }
-    }
-
-    // Filter Report Worker
-    public function filterWorker($id)
-    {
-        $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
-            ->first();
-        if ($check_access->kelola_laporan == 1) {
-            $users = User::orderBy($id, 'asc')
-                ->get();
-
-            return view('report.filter_table.filter_table_worker', compact('users'));
-        } else {
-            return back();
-        }
-    }
-
     // Filter Chart Transaction
     public function chartTransaction($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_laporan == 1) {
             $supplies = Transaction::all();
@@ -192,7 +149,7 @@ class ReportManageController extends Controller
     public function detailWorker($id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_laporan == 1) {
             $worker = User::find($id);
@@ -226,7 +183,7 @@ class ReportManageController extends Controller
     public function exportTransaction(Request $req)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_laporan == 1) {
             $jenis_laporan = $req->jns_laporan;
@@ -299,7 +256,7 @@ class ReportManageController extends Controller
     public function exportWorker(Request $req, $id)
     {
         $id_account = Auth::id();
-        $check_access = Acces::where('user', $id_account)
+        $check_access = Acces::where('id_user', $id_account)
             ->first();
         if ($check_access->kelola_laporan == 1) {
             $jml_laporan = count($req->laporan);
